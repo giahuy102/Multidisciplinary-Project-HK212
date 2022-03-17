@@ -13,8 +13,13 @@ app.use(express.json());
 const authRoute = require('./routes/auth');
 
 
-
 app.use('/api/user', authRoute);
+
+
+const verifyToken = require('./services/verifyToken');
+app.get('/', verifyToken, (req, res) => {
+    res.send('success');
+});
 
 
 const subcriber = require('./services/mqtt/subcriber');
