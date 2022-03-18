@@ -1,0 +1,110 @@
+li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+ul {
+    padding-left: 0;
+}
+
+.nav-bar {
+    width: 261px;
+    position: fixed;
+    height: 100vh;
+    background-color: #122939;
+    transition: all 0.3s;
+}
+
+.nav-bar img {
+    display: inline-block;
+    height: 35px;
+    margin: 20px 15px;
+    opacity: 1;
+}
+
+.transition-button {
+    height: 75px;
+    line-height: 75px;
+    position: absolute;
+    right: 15px;
+    top: 0;
+}
+
+
+
+.fabar-icon {
+    height: 75px;
+    line-height: 75px;
+    
+}
+
+.nav-bar li {
+    height: 50px;
+
+}
+
+.nav-bar li a {
+    /* display: inline-block; */
+    display: flex;
+    height: 50px;
+    align-items: center;
+    font-size: 18px;
+    color: #fff;
+    margin-left: 20px;
+    border-radius: 15px;
+    transition: all 0.2s;
+    margin-right: 15px;
+}
+
+.nav-bar li a span {
+    opacity: 1;
+}
+
+.nav-bar li a:hover {
+    background-color: #0F2330;
+}
+
+/* .nav-bar li a * {
+    height: 50px;
+    line-height: 50px;
+    display: inline-block;
+    display: flex;
+    align-items: center;
+} */
+
+
+.icon {
+    /* display: flex;
+    align-items: center; */
+    /* min-width: 50px; */
+    min-width: 50px;
+
+}
+
+.nav-bar-inactive {
+    width: 81.95px;
+}
+.nav-bar-inactive li a {
+    width: 50px;
+}
+
+.nav-bar-inactive li a span {
+    display: none;
+}
+
+.nav-bar-inactive img {
+    opacity: 0;
+}
+
+.nav-bar-inactive .transition-button {
+    width: 100%;
+    right: 0;
+    display: flex;
+    justify-content: center;
+
+}
+
+
