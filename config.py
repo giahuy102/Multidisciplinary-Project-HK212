@@ -5,6 +5,11 @@ from Adafruit_IO import MQTTClient
 ADAFRUIT_IO_USERNAME = "dat_huynh"
 ADAFRUIT_IO_KEY = "aio_nmMP12cvDwjXGwRSJ8uXY1HPT5DQ"
 FEED_IDS = ["bbc-led", "bbc-temp"]
+PORT = "COM3"
+
+
+client = MQTTClient(ADAFRUIT_IO_USERNAME, ADAFRUIT_IO_KEY)
+serial_port = serial.Serial(port=PORT, baudrate=115200)
 
 def on_connect(client):
     for feed_id in FEED_IDS:
@@ -20,6 +25,14 @@ def on_disconnect(client):
 def on_message(client, feed_id, payload):
     print("Data received:", payload)
 
+
+client.on_connect = on_connect
+client.on_disconnect = on_disconnect
+client.on_message = on_message
+client.on_subscribe = on_subscribe
+client.connect()
+client.loop_background()
+
 def process_data(client, data):
     data = data.replace("!", "")
     data = data.replace("#", "")
@@ -27,7 +40,7 @@ def process_data(client, data):
     if (data_name == "TEMP"):
         client.publish("bbc-temp", data_value)
 
-def read_serial(client, serial_port):
+def read_serial(serial_port):
     message = ""
     bytes_to_read = serial_port.inWaiting()
     if (bytes_to_read > 0):
@@ -39,3 +52,5 @@ def read_serial(client, serial_port):
             process_data(client, message[start: end + 1])
             message = "" if end == len(message) - 1 else message[end + 1:]
 
+def write_serial(serial_port, data):
+    serial_port.write(data.encode("UTF-8"))
