@@ -4,9 +4,8 @@ from Adafruit_IO import MQTTClient
 
 ADAFRUIT_IO_USERNAME = "dat_huynh"
 ADAFRUIT_IO_KEY = "aio_nmMP12cvDwjXGwRSJ8uXY1HPT5DQ"
-FEED_IDS = ["bbc-led", "bbc-temp"]
+FEED_IDS = ["bbc-led", "bbc-temp", "bbc-pump", "bbc-humi-air", "bbc-humi-soil"]
 PORT = "COM3"
-
 
 client = MQTTClient(ADAFRUIT_IO_USERNAME, ADAFRUIT_IO_KEY)
 serial_port = serial.Serial(port=PORT, baudrate=115200)
@@ -37,8 +36,14 @@ def process_data(client, data):
     data = data.replace("!", "")
     data = data.replace("#", "")
     data_id, data_name, data_value = data.split(":")
-    if (data_name == "TEMP"):
+    if data_name == "TEMP":
         client.publish("bbc-temp", data_value)
+    elif data_name =="LIGHT":
+        client.publish("bbc-light", data_value)
+    elif data_name == "HUMI_AIR":
+        client.publish("bbc-humi-air", data_value)
+    elif data_name == "HUMI_SOIL":
+        client.publish("bbc-humi-soil", data_value)
 
 def read_serial(serial_port):
     message = ""
@@ -54,3 +59,19 @@ def read_serial(serial_port):
 
 def write_serial(serial_port, data):
     serial_port.write(data.encode("UTF-8"))
+
+def open_led():
+    write_serial(serial_port, "!1:LED:1")
+    client.publish("bbc-led", 1)
+
+def close_led():
+    write_serial(serial_port, "!1:LED:0")
+    client.publish("bbc-led", 0)
+
+def open_pump():
+    write_serial(serial_port, "!1:PUMP:1")
+    client.publish("bbc-pump", 1)
+
+def close_pump():
+    write_serial(serial_port, "!1:PUMP:0")
+    client.publish("bbc-pump", 0)
