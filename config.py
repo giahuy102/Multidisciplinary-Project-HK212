@@ -22,8 +22,7 @@ def on_disconnect(client):
     sys.exit(1)
 
 def on_message(client, feed_id, payload):
-    print("Data received:", payload)
-
+    print("Data received from", feed_id, ":", payload)
 
 client.on_connect = on_connect
 client.on_disconnect = on_disconnect
