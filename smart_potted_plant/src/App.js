@@ -5,7 +5,7 @@ import './App.css';
 
 import Dashboard from './pages/Dashboard/index';
 import Login from './pages/Login/index';
-import Signup from './pages/Signup/index';
+import Register from './pages/Register/index';
 
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/login" element={ <Login /> } />
-        <Route path="/signup" element={ <Signup /> } />
+        <Route path="/register" element={ <Register /> } />
         <Route path="*" element={ <Dashboard /> } />        
   
       </Routes>

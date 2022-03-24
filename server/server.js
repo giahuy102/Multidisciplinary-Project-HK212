@@ -6,6 +6,9 @@ const dbConnection = require('./services/database/connection')
 
 dotenv.config();//load config from .env to process.env
 
+const cors = require('cors') //cross origin
+app.use(cors())
+
 // mongoose.connect(process.env.DB_CONNECT, { useNewUrlParser: true }, () => 
 //     console.log("Connect DB successfully")
 // );

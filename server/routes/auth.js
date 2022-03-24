@@ -4,6 +4,7 @@ const { registerValidation, loginValidation } = require('../services/auth/valida
 const User = require('../model/User');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
+const { username } = require('../services/mqtt/config');
 
 router.post('/register', async (req, res) => {
     //validate before saving to database
@@ -25,15 +26,16 @@ router.post('/register', async (req, res) => {
 
     try {
         const savedUser = await user.save();
-        const token = jwt.sign(
-            { user_id: user._id,  },
-            process.env.SECRET_TOKEN,
-            {
-                expiresIn: "2h",
-            }
-        );
+        // const token = jwt.sign(
+        //     { user_id: user._id,  },
+        //     process.env.SECRET_TOKEN,
+        //     {
+        //         expiresIn: "2h",
+        //     }
+        // );
         
-        res.status(201).header('auth-token', token).send(token);
+        // res.status(201).header('auth-token', token).send(token);
+        res.status(201).send("Register successfully");
     } catch(err) {
         res.status(400).send(err);
     }
@@ -57,7 +59,14 @@ router.post('/login', async (req, res) => {
                 expiresIn: "2h",
             }
         );
-        res.status(200).header('auth-token', token).send('Logged in');
+        
+        // user.accessToken = token;
+        
+        res.status(200).json({
+            username: user.username,
+            email: user.email,
+            accessToken: token
+        });
     } 
     else {
         res.status(400).send('Invalid password');
