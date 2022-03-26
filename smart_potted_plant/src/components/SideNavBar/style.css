@@ -12,7 +12,7 @@ ul {
 
 .nav-bar {
     width: 261px;
-    position: fixed;
+    position: relative;
     height: 100vh;
     background-color: #122939;
     transition: all 0.3s;
@@ -33,17 +33,13 @@ ul {
     top: 0;
 }
 
-
-
 .fabar-icon {
     height: 75px;
     line-height: 75px;
-    
 }
 
 .nav-bar li {
     height: 50px;
-
 }
 
 .nav-bar li a {
@@ -67,6 +63,7 @@ ul {
     background-color: #0F2330;
 }
 
+
 /* .nav-bar li a * {
     height: 50px;
     line-height: 50px;
@@ -75,18 +72,17 @@ ul {
     align-items: center;
 } */
 
-
 .icon {
     /* display: flex;
     align-items: center; */
     /* min-width: 50px; */
     min-width: 50px;
-
 }
 
 .nav-bar-inactive {
     width: 81.95px;
 }
+
 .nav-bar-inactive li a {
     width: 50px;
 }
@@ -104,7 +100,4 @@ ul {
     right: 0;
     display: flex;
     justify-content: center;
-
 }
-
-

@@ -1,0 +1,23 @@
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+import SideNavBar from "../../components/SideNavBar/index";
+import Home from "../../components/Home/index";
+import Statistic from "../../components/Statistic/index";
+import ControlPanel from "../ControlPanel";
+import "./style.css";
+
+export default function Dashboard() {
+  return (
+    <div className="d-flex">
+      <SideNavBar />
+      <div>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/statistic" element={<Statistic />} />
+          <Route path="/control-panel" element={<ControlPanel />} />
+        </Routes>
+      </div>
+    </div>
+  );
+}
