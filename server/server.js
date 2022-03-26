@@ -3,8 +3,8 @@ const app = express();
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const dbConnection = require('./services/database/connection')
-
-dotenv.config();//load config from .env to process.env
+const bodyParser = require("body-parser")
+dotenv.config(); //load config from .env to process.env
 
 const cors = require('cors') //cross origin
 app.use(cors())
@@ -15,20 +15,26 @@ app.use(cors())
 
 dbConnection.connect();
 
-app.use(express.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
-const authRoute = require('./routes/auth');
-app.use('/api/user', authRoute);
-
+const apiRouter = require('./routes/router');
+app.use('/api/user', apiRouter);
 
 // const verifyToken = require('./middleware/verifyToken');
 // app.get('/', verifyToken, (req, res) => {
 //     res.send('success');
 // });
-
-
-const subcriber = require('./services/mqtt/subcriber');
-subcriber.subcribe();
-
-
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+    var err = new Error("Not Found");
+    err.status = 404;
+    next(err);
+});
+// production error handler
+// no stacktraces leaked to user
+app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.send("URL Not Found!");
+});
 app.listen(process.env.PORT, () => console.log(`Server is running at http://localhost:${process.env.PORT}`));

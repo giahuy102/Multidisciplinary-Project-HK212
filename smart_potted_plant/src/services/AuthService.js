@@ -1,4 +1,3 @@
-
 import axios from 'axios';
 const API_URL = "http://localhost:3001/api/user/";
 
@@ -9,17 +8,17 @@ const AuthService = function() {
     this.register = (username, email, password) => {
         return axios.post(API_URL + 'register', {
             username,
-            email, 
+            email,
             password
         });
     }
 
     this.login = (email, password) => {
         return axios.post(API_URL + 'login', {
-            email, 
+            email,
             password
         })
-    } 
+    }
 }
 
 export default new AuthService();

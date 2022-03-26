@@ -23,6 +23,7 @@ def on_disconnect(client):
 
 def on_message(client, feed_id, payload):
     print("Data received from", feed_id, ":", payload)
+    write_serial(serial_port, feed_id + " " + payload + "\n")
 
 client.on_connect = on_connect
 client.on_disconnect = on_disconnect
@@ -61,16 +62,12 @@ def write_serial(serial_port, data):
 
 def open_led():
     write_serial(serial_port, "!1:LED:1")
-    client.publish("bbc-led", 1)
 
 def close_led():
     write_serial(serial_port, "!1:LED:0")
-    client.publish("bbc-led", 0)
 
 def open_pump():
     write_serial(serial_port, "!1:PUMP:1")
-    client.publish("bbc-pump", 1)
 
 def close_pump():
     write_serial(serial_port, "!1:PUMP:0")
-    client.publish("bbc-pump", 0)

@@ -1,14 +1,31 @@
 //Use your own Adafruit server account to dev
 
 let clientTopics = {
-    lightSensor: 'legiahuy09122001/feeds/mp-light-sensor',
-    soilMosture: 'legiahuy09122001/feeds/mp-soil-mosture'
-}
+    temprature: "dat_huynh/feeds/bbc-temp",
+    led: "dat_huynh/feeds/bbc-led",
+    pump: "dat_huynh/feeds/bbc-pump",
+    humiAir: "dat_huynh/feeds/bbc-humi-air",
+    humiSoild: "dat_huynh/feeds/bbc-humi-soild",
+};
 
 let settings = {
-    username: 'legiahuy09122001',
-    key: 'aio_XIKE74TTQ8oMd6mACb1xrKw4KBdM',
-    clientTopics: [clientTopics.lightSensor, clientTopics.soilMosture]
-}
+    username: "dat_huynh",
+    key: "aio_nmMP12cvDwjXGwRSJ8uXY1HPT5DQ",
+    clientTopics: [
+        clientTopics.temprature,
+        clientTopics.led,
+        clientTopics.pump,
+        clientTopics.humiAir,
+        clientTopics.humiSoild,
+    ],
+    feedKey: {
+        temprature: "bbc-temp",
+        led: "bbc-led",
+        pump: "bbc-pump",
+        humiAir: "bbc-humi-air",
+        humiSoild: "bbc-humi-soild",
+    },
+    feedKeyDetail: clientTopics
+};
 
 module.exports = settings
