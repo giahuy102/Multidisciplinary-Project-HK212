@@ -33,13 +33,15 @@ class ControlPanel extends Component {
   render = () => {
     return (
       <div>
-        <h1>Control panel</h1>
-        <div>This is content</div>
-        <Switch
-          value={this.state.ledStatus}
-          onClick={() => this.setState({ ledStatus: !this.state.ledStatus })}
-          style={{ height: 50}}
-        />
+        <h1 className="text-center w-100">Control panel</h1>
+        <div className="form-group d-flex align-items-center">
+          <label style = {{fontSize: 30}}>LED</label>
+          <Switch
+            value={this.state.ledStatus}
+            onClick={() => this.setState({ ledStatus: !this.state.ledStatus })}
+            style = {{height: 50}}
+          />
+        </div>
       </div>
     );
   };
