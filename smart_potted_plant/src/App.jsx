@@ -7,7 +7,6 @@ import Dashboard from './pages/Dashboard/index';
 import Login from './pages/Login/index';
 import Register from './pages/Register/index';
 
-
 function App() {
   return (
     <Router>

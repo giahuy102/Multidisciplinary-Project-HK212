@@ -1,9 +1,11 @@
 import { withRouter } from "../../withRouter";
 import { Component } from "react";
 import axios from "axios";
-import "./style.css"
+import "./style.css";
 //import "../../components/Buttons/SwitchButton"
-import { Switch, TextPropTypes} from "react-native";
+import { Switch, TextPropTypes } from "react-native";
+import { Temperature, Humidity } from "react-environment-chart";
+
 const API_URL = "http://localhost:3001/api/user/";
 class ControlPanel extends Component {
   constructor(props) {
@@ -12,8 +14,8 @@ class ControlPanel extends Component {
       ledStatus: false,
       pumpStatus: false,
       temparature: 0,
-      humiSoil: 0,
-      humiAir: 0,
+      humiSoil: 30,
+      humiAir: 30,
     };
   }
   componentDidMount = async () => {
@@ -28,26 +30,31 @@ class ControlPanel extends Component {
       url: API_URL + "get-data",
       withCredentials: true,
     });
-    this.setState({temparature: response.temparature, ledStatus: response.ledStatus});
+    this.setState({
+      temparature: response.temparature,
+      ledStatus: response.ledStatus,
+    });
   };
   changeDeviceStatus = async (device) => {
-    let deviceStatus = undefined
+    let deviceStatus = undefined;
     if (device == "led") {
-      deviceStatus = (!this.state.ledStatus) ? 1 : 0;
+      deviceStatus = !this.state.ledStatus ? 1 : 0;
       this.setState({ ledStatus: !this.state.ledStatus });
-    }
-    else if (device == "pump") {
-      deviceStatus = (!this.state.pumpStatus) ? 1 : 0;
+    } else if (device == "pump") {
+      deviceStatus = !this.state.pumpStatus ? 1 : 0;
       this.setState({ pumpStatus: !this.state.pumpStatus });
     }
-    let response = await axios.post(API_URL + "change-device-status", {device: device, deviceStatus: deviceStatus});
-    if (response.status == 201) alert(response.data); 
-  }
+    let response = await axios.post(API_URL + "change-device-status", {
+      device: device,
+      deviceStatus: deviceStatus,
+    });
+    if (response.status == 201) alert(response.data);
+  };
   render = () => {
     return (
-      <div className="container-fluid d-flex flex-wrap justify-content-center background">
+      <div className="container-fluid d-flex flex-wrap background justify-content-center p-5">
         <h1 className="text-center w-100">Control panel</h1>
-        <div className="w-100 justify-content-center d-flex">
+        <div className="w-100 justify-content-center d-flex control-box">
           <div className="form-group d-flex align-items-center w-50 justify-content-center">
             <label style={{ fontSize: 30, paddingRight: 30 }}>LED</label>
             <Switch
@@ -65,6 +72,22 @@ class ControlPanel extends Component {
               style={{ height: 50 }}
             />
           </div>
+        </div>
+        <div className="w-100 d-flex flex-wrap justify-content-between info-box p-1">
+          <div className="w-25 d-flex justify-content-center">
+            <Temperature value={this.state.temparature} height={300} />
+          </div>
+          <div className="w-25 d-flex flex-wrap justify-content-center mt-5">
+            <Humidity value={this.state.humiAir} height={100} />
+          </div>
+          <div className="w-25 d-flex flex-wrap justify-content-center mt-5">
+            <Humidity value={this.state.humiAir} height={100} />
+          </div>
+        </div>
+        <div className="w-100 d-flex flex-wrap justify-content-between info-box">
+          <div className="w-25 d-flex justify-content-center h5">{this.state.temparature} &#8451;</div>
+          <div className="w-25 d-flex justify-content-center h5">{this.state.humiAir} %</div>
+          <div className="w-25 d-flex justify-content-center h5">{this.state.humiSoil} %</div>
         </div>
       </div>
     );

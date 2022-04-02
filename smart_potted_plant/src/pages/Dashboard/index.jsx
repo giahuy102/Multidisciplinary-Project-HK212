@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import SideNavBar from "../../components/SideNavBar/index";
 import Home from "../../components/Home/index";
 import Statistic from "../../components/Statistic/index";
-import ControlPanel from "../../components/ControlPanel";
+import ControlPanel from "../../components/ControlPanel/";
 import "./style.css";
 
 export default function Dashboard() {
