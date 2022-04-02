@@ -3,8 +3,9 @@ import { Component } from "react";
 import axios from "axios";
 import "./style.css";
 //import "../../components/Buttons/SwitchButton"
-import { Switch, TextPropTypes } from "react-native";
-import { Temperature, Humidity } from "react-environment-chart";
+import { Switch } from "react-native";
+import { Temperature} from "react-environment-chart";
+import GaugeChart from "react-gauge-chart";
 
 const API_URL = "http://localhost:3001/api/user/";
 class ControlPanel extends Component {
@@ -13,9 +14,9 @@ class ControlPanel extends Component {
     this.state = {
       ledStatus: false,
       pumpStatus: false,
-      temparature: 0,
+      temparature: 35,
       humiSoil: 30,
-      humiAir: 30,
+      humiAir: 40,
     };
   }
   componentDidMount = async () => {
@@ -73,21 +74,35 @@ class ControlPanel extends Component {
             />
           </div>
         </div>
-        <div className="w-100 d-flex flex-wrap justify-content-between info-box p-1">
+        <div className="w-100 d-flex flex-wrap justify-content-between info-box p-1 align-content-center">
           <div className="w-25 d-flex justify-content-center">
             <Temperature value={this.state.temparature} height={300} />
           </div>
           <div className="w-25 d-flex flex-wrap justify-content-center mt-5">
-            <Humidity value={this.state.humiAir} height={100} />
+            <GaugeChart
+              nrOfLevels={20}
+              percent={this.state.humiAir / 100}
+              textColor={"black"}
+            />
           </div>
           <div className="w-25 d-flex flex-wrap justify-content-center mt-5">
-            <Humidity value={this.state.humiAir} height={100} />
+            <GaugeChart
+              nrOfLevels={20}
+              percent={this.state.humiSoil / 100}
+              textColor={"black"}
+            />
           </div>
         </div>
         <div className="w-100 d-flex flex-wrap justify-content-between info-box">
-          <div className="w-25 d-flex justify-content-center h5">{this.state.temparature} &#8451;</div>
-          <div className="w-25 d-flex justify-content-center h5">{this.state.humiAir} %</div>
-          <div className="w-25 d-flex justify-content-center h5">{this.state.humiSoil} %</div>
+          <div className="w-25 d-flex justify-content-center h5">
+            Temperature: {this.state.temparature} &#8451;
+          </div>
+          <div className="w-25 d-flex justify-content-center h5">
+            Air Humidity: {this.state.humiAir} %
+          </div>
+          <div className="w-25 d-flex justify-content-center h5">
+            Soil Humidity: {this.state.humiSoil} %
+          </div>
         </div>
       </div>
     );
