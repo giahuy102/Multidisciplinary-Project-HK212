@@ -10,6 +10,7 @@ const axios = require("axios");
 const settings = require("../services/mqtt/config");
 
 const subcriber = require("../services/mqtt/subcriber");
+const { mapReduce } = require('../model/User');
 const client = subcriber.subcribe((err) => console.log(err));
 const Publisher = require("../services/mqtt/publisher").Publisher;
 const publisher = new Publisher(client);
@@ -78,17 +79,83 @@ router.post('/login', async(req, res) => {
         res.status(400).send('Invalid password');
     }
 });
-router.get("/get-data", async(req, res) => {
+router.get("/get-all-data", async(req, res) => {
     // Check jwt
-    let username = settings.username;
-    let feeds = settings.feedKey;
+    let temprature = (
+        await axios.get(
+            `https://io.adafruit.com/api/v2/${settings.feedKeyDetail.temprature}/data`
+        )
+    ).data;
+    let ledStatus = (
+        await axios.get(
+            `https://io.adafruit.com/api/v2/${settings.feedKeyDetail.led}/data`
+        )
+    ).data;
+    let pumpStatus = (
+        await axios.get(
+            `https://io.adafruit.com/api/v2/${settings.feedKeyDetail.pump}/data`
+        )
+    ).data;
+    let humiSoil = (
+        await axios.get(
+            `https://io.adafruit.com/api/v2/${settings.feedKeyDetail.humiSoil}/data`
+        )
+    ).data;
+    let humiAir = (
+        await axios.get(
+            `https://io.adafruit.com/api/v2/${settings.feedKeyDetail.humiAir}/data`
+        )
+    ).data;
+    let light = (
+        await axios.get(
+            `https://io.adafruit.com/api/v2/${settings.feedKeyDetail.light}/data`
+        )
+    ).data;
+    res.status(200).json({
+        temprature: temprature,
+        humiAir: humiAir,
+        humiSoil: humiSoil,
+        light: light,
+        ledStatus: ledStatus,
+        pumpStatus: pumpStatus,
+    });
+});
+router.get("/get-lastest-data", async(req, res) => {
+    // Check jwt
     let tempratureData = (await axios.get(
-        `https://io.adafruit.com//api/v2/${username}/feeds/${feeds.temprature}/data`, { params: { limit: 1 } }
+        `https://io.adafruit.com/api/v2/${settings.feedKeyDetail.temprature}/data`, { params: { limit: 1 } }
     )).data;
-    let ledData = (await axios.get(
-        `https://io.adafruit.com//api/v2/${username}/feeds/${feeds.led}/data`, { params: { limit: 1 } }
+    let ledStatus = (await axios.get(
+        `https://io.adafruit.com/api/v2/${settings.feedKeyDetail.led}/data`, { params: { limit: 1 } }
     )).data;
-    res.status(200).json({ temprature: tempratureData[0].value, ledStatus: ledData[0].value });
+    let pumpStatus = (
+        await axios.get(
+            `https://io.adafruit.com/api/v2/${settings.feedKeyDetail.pump}/data`, { params: { limit: 1 } }
+        )
+    ).data;
+    let humiSoil = (
+        await axios.get(
+            `https://io.adafruit.com/api/v2/${settings.feedKeyDetail.humiSoil}/data`, { params: { limit: 1 } }
+        )
+    ).data;
+    let humiAir = (
+        await axios.get(
+            `https://io.adafruit.com/api/v2/${settings.feedKeyDetail.humiAir}/data`, { params: { limit: 1 } }
+        )
+    ).data;
+    let light = (
+        await axios.get(
+            `https://io.adafruit.com/api/v2/${settings.feedKeyDetail.light}/data`, { params: { limit: 1 } }
+        )
+    ).data;
+    res.status(200).json({
+        temprature: tempratureData[0].value,
+        humiAir: humiAir[0].value,
+        humiSoil: humiSoil[0].value,
+        light: light[0].value,
+        ledStatus: ledStatus[0].value,
+        pumpStatus: pumpStatus[0].value,
+    });
 });
 
 router.post("/change-device-status", async(req, res) => {
@@ -99,6 +166,5 @@ router.post("/change-device-status", async(req, res) => {
         if (err) return res.status(201).send(err.toString());
         return res.status(200).send();
     });
-
 });
 module.exports = router;

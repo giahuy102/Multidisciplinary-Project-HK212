@@ -1,10 +1,10 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import SideNavBar from "../../components/SideNavBar/index";
-import Home from "../../components/Home/index";
-import Statistic from "../../components/Statistic/index";
-import ControlPanel from "../../components/ControlPanel/";
+import SideNavBar from "../../components/SideNavBar/";
+import Home from "../../components/Home/";
+import Statistic from "../../components/Statistic/";
+import ControlPanel from "../../components/control-panel";
 import "./style.css";
 
 export default function Dashboard() {
