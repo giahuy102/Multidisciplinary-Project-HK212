@@ -81,7 +81,7 @@ router.post('/login', async(req, res) => {
 });
 router.get("/get-all-data", async(req, res) => {
     // Check jwt
-    let temprature = (
+    let temperature = (
         await axios.get(
             `https://io.adafruit.com/api/v2/${settings.feedKeyDetail.temprature}/data`
         )
@@ -112,7 +112,7 @@ router.get("/get-all-data", async(req, res) => {
         )
     ).data;
     res.status(200).json({
-        temprature: temprature,
+        temperature: temperature,
         humiAir: humiAir,
         humiSoil: humiSoil,
         light: light,
@@ -122,7 +122,7 @@ router.get("/get-all-data", async(req, res) => {
 });
 router.get("/get-lastest-data", async(req, res) => {
     // Check jwt
-    let tempratureData = (await axios.get(
+    let temperatureData = (await axios.get(
         `https://io.adafruit.com/api/v2/${settings.feedKeyDetail.temprature}/data`, { params: { limit: 1 } }
     )).data;
     let ledStatus = (await axios.get(
@@ -149,7 +149,7 @@ router.get("/get-lastest-data", async(req, res) => {
         )
     ).data;
     res.status(200).json({
-        temprature: tempratureData[0].value,
+        temperature: temperatureData[0].value,
         humiAir: humiAir[0].value,
         humiSoil: humiSoil[0].value,
         light: light[0].value,

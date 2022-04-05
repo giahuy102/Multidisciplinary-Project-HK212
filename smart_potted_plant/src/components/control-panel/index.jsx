@@ -16,10 +16,10 @@ class ControlPanel extends Component {
     this.state = {
       ledStatus: false,
       pumpStatus: false,
-      temparature: 35,
-      humiSoil: 30,
-      humiAir: 40,
-      light: 300,
+      temperature: 0,
+      humiSoil: 0,
+      humiAir: 0,
+      light: 0,
     };
   }
   liquidBorderColor = "white";
@@ -36,13 +36,14 @@ class ControlPanel extends Component {
       url: API_URL + "get-lastest-data",
       withCredentials: true,
     });
+    console.log(response);
     await this.setState({
-      temparature: response.data.temparature,
+      temperature: response.data.temperature,
       humiAir: response.data.humiAir,
       humiSoil: response.data.humiSoil,
       light: response.data.light,
       ledStatus: response.data.ledStatus,
-      pumpStatus: response.data.pumpStatus
+      pumpStatus: response.data.pumpStatus,
     });
   };
   changeDeviceStatus = async (device) => {
@@ -90,7 +91,7 @@ class ControlPanel extends Component {
           <div className="col-3 d-flex flex-wrap justify-content-center align-content-center">
             <Thermometer
               theme="dark"
-              value={this.state.temparature}
+              value={this.state.temperature}
               max="100"
               steps="1"
               format="°C"
@@ -145,7 +146,7 @@ class ControlPanel extends Component {
         </div>
         <div className="w-100 d-flex flex-wrap justify-content-between align-content-center info-box mt-3 row">
           <div className="col-3 d-flex justify-content-center h5">
-            Temperature: {this.state.temparature} &#8451;
+            Temperature: {this.state.temperature} &#8451;
           </div>
           <div className="col-3 d-flex justify-content-center h5">
             Air Humidity: {this.state.humiAir} %
