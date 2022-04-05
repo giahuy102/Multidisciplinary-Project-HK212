@@ -2,8 +2,8 @@ import React from 'react';
 import Chart from "react-apexcharts";
 import {useState} from 'react'
 
-export default function Home() {
-
+const Statistic = () => {
+    console.log("RENDER STAT");
     const [options_temp, set_options_temp] = useState
     (
         {
@@ -426,3 +426,6 @@ export default function Home() {
 
 
 }
+
+
+export default Statistic;
