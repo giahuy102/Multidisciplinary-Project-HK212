@@ -12,11 +12,14 @@ import { Link } from "react-router-dom";
 
 import "./style.css";
 
+import Statistic from '../Statistic'
+
 export default function SideNavBar() {
   const [active, setActive] = useState(true);
   return (
     <IconContext.Provider value={{ color: "#fff" }}>
       <nav className={active ? "nav-bar" : "nav-bar nav-bar-inactive"}>
+        
         <img src={require("../../assets/images/logo.png")}></img>
         <Link
           className="transition-button"

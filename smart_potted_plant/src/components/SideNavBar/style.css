@@ -13,7 +13,7 @@ ul {
 .nav-bar {
     width: 261px;
     position: relative;
-    height: 100vh;
+    /* height: 100vh; */
     background-color: #122939;
     transition: all 0.3s;
 }
