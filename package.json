@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "d3-color": "^3.1.0",
+    "react-thermometer-component": "^1.0.1"
+  }
+}

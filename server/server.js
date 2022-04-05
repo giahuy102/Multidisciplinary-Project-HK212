@@ -7,7 +7,12 @@ const bodyParser = require("body-parser")
 dotenv.config(); //load config from .env to process.env
 
 const cors = require('cors') //cross origin
-app.use(cors())
+app.use(
+    cors({
+        origin: process.env.CLIENT_ADDRESS, // <-- location of the react app were connecting to
+        credentials: true,
+    })
+);
 
 // mongoose.connect(process.env.DB_CONNECT, { useNewUrlParser: true }, () => 
 //     console.log("Connect DB successfully")

@@ -5,7 +5,8 @@ let clientTopics = {
     led: "dat_huynh/feeds/bbc-led",
     pump: "dat_huynh/feeds/bbc-pump",
     humiAir: "dat_huynh/feeds/bbc-humi-air",
-    humiSoild: "dat_huynh/feeds/bbc-humi-soild",
+    humiSoil: "dat_huynh/feeds/bbc-humi-soil",
+    light: "dat_huynh/feeds/bbc-light",
 };
 
 let settings = {
@@ -16,14 +17,15 @@ let settings = {
         clientTopics.led,
         clientTopics.pump,
         clientTopics.humiAir,
-        clientTopics.humiSoild,
+        clientTopics.humiSoil,
+        clientTopics.light
     ],
     feedKey: {
         temprature: "bbc-temp",
         led: "bbc-led",
         pump: "bbc-pump",
         humiAir: "bbc-humi-air",
-        humiSoild: "bbc-humi-soild",
+        humiSoil: "bbc-humi-soild",
     },
     feedKeyDetail: clientTopics
 };
