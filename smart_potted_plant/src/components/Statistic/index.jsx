@@ -5,26 +5,15 @@ import axios from "axios";
 const API_URL = "http://localhost:3001/api/user/";
 
 export default function Home() {
-  useEffect(async () => {
-    let response = await axios({
-      method: "get",
-      data: {},
-      url: API_URL + "get-all-data",
-      withCredentials: true,
-    });
-    let data = response.data;
-    console.log(data);
-  }, []);
   const [options_temp, set_options_temp] = useState({
     stroke: {
-      width: [0, 4],
+      width: [0, 1],
     },
     title: {
-      // text: 'Temperature'
-    },
-    dataLabels: {
-      enabled: true,
-      enabledOnSeries: [1],
+      text: "Temperature",
+      style: {
+        fontSize: "20px",
+      },
     },
     labels: [
       "00:00",
@@ -57,17 +46,156 @@ export default function Home() {
       type: { format: "hh:ss" },
       title: {
         text: "Time",
+        style: {
+          fontSize: "15px",
+        },
+      },
+      labels: {
+        style: {
+          fontSize: "15px",
+        },
       },
     },
     yaxis: [
       {
         title: {
           text: "Temperature",
+          style: {
+            fontSize: "15px",
+          },
+        },
+        labels: {
+          style: {
+            fontSize: "15px",
+          },
         },
       },
     ],
     grid: {
       show: true,
+    },
+    colors: [
+      "#18D8D8",
+      "#A9D794",
+      "#46AF78",
+      "#A93F55",
+      "#8C5E58",
+      "#2176FF",
+      "#33A1FD",
+      "#7A918D",
+      "#BAFF29",
+    ],
+    chart: {
+      foreColor: "white",
+    },
+    plotOptions: {
+      bar: {
+        borderRadius: 7,
+      },
+    },
+    dataLabels: {
+      enabled: true,
+      enabledOnSeries: undefined,
+      formatter: function (val, opts) {
+        return val;
+      },
+      textAnchor: "middle",
+      distributed: false,
+      offsetX: 0,
+      offsetY: 0,
+      style: {
+        fontSize: "15px",
+        fontFamily: "Helvetica, Arial, sans-serif",
+        fontWeight: "bold",
+        colors: ["black"],
+      },
+      background: {
+        enabled: true,
+        foreColor: "#fff",
+        padding: 4,
+        borderRadius: 2,
+        borderWidth: 1,
+        borderColor: "#fff",
+        opacity: 0.7,
+        dropShadow: {
+          enabled: true,
+          top: 5,
+          left: 5,
+          blur: 1,
+          color: "#000",
+          opacity: 0.45,
+        },
+      },
+      dropShadow: {
+        enabled: false,
+        top: 5,
+        left: 5,
+        blur: 1,
+        color: "#000",
+        opacity: 0.45,
+      },
+    },
+    forecastDataPoints: {
+      count: 5,
+      fillOpacity: 0.5,
+      strokeWidth: undefined,
+      dashArray: 4,
+    },
+    tooltip: {
+      enabled: true,
+      enabledOnSeries: undefined,
+      shared: true,
+      followCursor: true,
+      intersect: false,
+      inverseOrder: false,
+      custom: undefined,
+      fillSeriesColor: false,
+      theme: "dark",
+      style: {
+        fontSize: "13px",
+      },
+      onDatasetHover: {
+        highlightDataSeries: true,
+      },
+      x: {
+        show: true,
+        format: "dd MMM",
+        formatter: undefined,
+      },
+      y: {
+        formatter: undefined,
+        title: {
+          formatter: (seriesName) => seriesName,
+        },
+      },
+      z: {
+        formatter: undefined,
+        title: "Size: ",
+      },
+      marker: {
+        show: true,
+      },
+      items: {
+        display: "flex",
+      },
+      fixed: {
+        enabled: false,
+        position: "topRight",
+        offsetX: 0,
+        offsetY: 0,
+      },
+    },
+    noData: {
+      text: "No Data",
+      align: "center",
+      verticalAlign: "middle",
+      offsetX: 0,
+      offsetY: 0,
+      style: {
+        color: ["white"],
+        fontSize: "20px",
+        fontFamily: undefined,
+      },
     },
   });
 
@@ -411,14 +539,15 @@ export default function Home() {
     width: "300px",
     padding: "10px",
     boxShadow: "3px 3px #c3d0cd",
+    color: "black",
   };
 
   return (
-    <div>
+    <div className="background">
       {/* <button onClick={handleChart} className='btn btn-primary m-2'>Click here</button> */}
 
       <div
-        style={{ backgroundColor: "#f3f3f2", textAlign: "center" }}
+        style={{ backgroundColor: "rgba(0,0,0,0.1)", textAlign: "center" }}
         className="header"
       >
         <p style={{ fontSize: "40px", fontWeight: "bold" }}>Statistic</p>
