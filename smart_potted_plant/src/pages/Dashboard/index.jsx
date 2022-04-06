@@ -27,14 +27,13 @@ export default class Dashboard extends React.Component {
       light: 0,
     };
   }
-  componentDidMount = async () => {
+  pullData = async () => {
     let response = await axios({
       method: "get",
       data: {},
       url: API_URL + "get-all-data",
       withCredentials: true,
     });
-    console.log(response);
     await this.setState({
       temperatureData: response.data.temperature,
       humiAirData: response.data.humiAir,
@@ -50,6 +49,9 @@ export default class Dashboard extends React.Component {
       ledStatus: response.data.ledStatus[0].value,
       pumpStatus: response.data.pumpStatus[0].value,
     });
+  };
+  componentDidMount = async () => {
+    await this.pullData();
   };
   changeDeviceStatus = async (device) => {
     let deviceStatus = undefined;
