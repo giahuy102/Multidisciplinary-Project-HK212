@@ -87,53 +87,59 @@ export default function Home() {
     ],
     chart: {
       foreColor: "white",
+      toolbar: {
+        show: true,
+        tools: {
+          download: false,
+        }
+      }
     },
     plotOptions: {
       bar: {
         borderRadius: 7,
       },
     },
-    dataLabels: {
+    dataLabels: { 
       enabled: true,
-      enabledOnSeries: undefined,
-      formatter: function (val, opts) {
-        return val;
-      },
+      // enabledOnSeries: undefined,
+      // formatter: function (val, opts) {
+      //   return val;
+      // },
       textAnchor: "middle",
-      distributed: false,
+      // distributed: false,
       offsetX: 0,
       offsetY: 0,
       style: {
         fontSize: "15px",
         fontFamily: "Helvetica, Arial, sans-serif",
-        fontWeight: "bold",
+        fontWeight: "200/500",
         colors: ["black"],
       },
       background: {
         enabled: true,
         foreColor: "#fff",
-        padding: 4,
+        padding: 3,
         borderRadius: 2,
         borderWidth: 1,
         borderColor: "#fff",
         opacity: 0.7,
-        dropShadow: {
-          enabled: true,
-          top: 5,
-          left: 5,
-          blur: 1,
-          color: "#000",
-          opacity: 0.45,
-        },
+        // dropShadow: {
+        //   enabled: true,
+        //   top: 5,
+        //   left: 5,
+        //   blur: 1,
+        //   color: "#000",
+        //   opacity: 0.45,
+        // },
       },
-      dropShadow: {
-        enabled: false,
-        top: 5,
-        left: 5,
-        blur: 1,
-        color: "#000",
-        opacity: 0.45,
-      },
+      // dropShadow: {
+      //   enabled: false,
+      //   top: 5,
+      //   left: 5,
+      //   blur: 1,
+      //   color: "#000",
+      //   opacity: 0.45,
+      // },
     },
     forecastDataPoints: {
       count: 5,
@@ -184,6 +190,7 @@ export default function Home() {
         offsetX: 0,
         offsetY: 0,
       },
+      
     },
     noData: {
       text: "No Data",
@@ -212,24 +219,125 @@ export default function Home() {
 
   const [options_soil_moisture, set_soil_moisture] = useState({
     chart: {
-      dropShadow: {
-        enabled: true,
-        color: "#000",
-        top: 18,
-        left: 7,
-        blur: 10,
-        opacity: 0.2,
-      },
+      // dropShadow: {
+      //   enabled: false,
+      //   color: "#000",
+      //   top: 18,
+      //   left: 7,
+      //   blur: 10,
+      //   opacity: 0.2,
+      // },
       toolbar: {
         show: true,
+        tools: {
+          download: false,
+          selection: false,
+          zoom: true,
+          zoomin: true,
+          zoomout: true,
+          pan: true,
+          reset: true | '<img src="/static/icons/reset.png" width="20">',
+          customIcons: []
+        },
       },
       zoom: {
         enabled: true,
       },
+      foreColor: "white",
     },
-    colors: ["#77B6EA", "#545454"],
-    dataLabels: {
+    colors: [
+      "#18D8D8",
+      "#A9D794",
+      "#46AF78",
+      "#A93F55",
+      "#8C5E58",
+      "#2176FF",
+      "#33A1FD",
+      "#7A918D",
+      "#BAFF29",
+    ],
+    dataLabels: { 
       enabled: true,
+      // enabledOnSeries: undefined,
+      // formatter: function (val, opts) {
+      //   return val;
+      // },
+      textAnchor: "middle",
+      // distributed: false,
+      offsetX: 0,
+      offsetY: 0,
+      style: {
+        fontSize: "15px",
+        fontFamily: "Helvetica, Arial, sans-serif",
+        fontWeight: "200/500",
+        colors: ["black"],
+      },
+      background: {
+        enabled: true,
+        foreColor: "#fff",
+        padding: 3,
+        borderRadius: 2,
+        borderWidth: 1,
+        borderColor: "#fff",
+        opacity: 0.7,
+      },
+    },
+    tooltip: {
+      enabled: true,
+      enabledOnSeries: undefined,
+      shared: true,
+      followCursor: true,
+      intersect: false,
+      inverseOrder: false,
+      custom: undefined,
+      fillSeriesColor: false,
+      theme: "dark",
+      style: {
+        fontSize: "13px",
+      },
+      onDatasetHover: {
+        highlightDataSeries: true,
+      },
+      x: {
+        show: true,
+        format: "dd MMM",
+        formatter: undefined,
+      },
+      y: {
+        formatter: undefined,
+        title: {
+          formatter: (seriesName) => seriesName,
+        },
+      },
+      z: {
+        formatter: undefined,
+        title: "Size: ",
+      },
+      marker: {
+        show: true,
+      },
+      items: {
+        display: "flex",
+      },
+      fixed: {
+        enabled: false,
+        position: "topRight",
+        offsetX: 0,
+        offsetY: 0,
+      },
+      
+    },
+    noData: {
+      text: "No Data",
+      align: "center",
+      verticalAlign: "middle",
+      offsetX: 0,
+      offsetY: 0,
+      style: {
+        color: ["white"],
+        fontSize: "20px",
+        fontFamily: undefined,
+      },
     },
     stroke: {
       curve: "smooth",
@@ -237,7 +345,7 @@ export default function Home() {
     grid: {
       borderColor: "#e7e7e7",
       row: {
-        colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
+        colors: ["white", "transparent"], // takes an array which will be repeated on columns
         opacity: 0.5,
       },
     },
@@ -275,11 +383,27 @@ export default function Home() {
       ],
       title: {
         text: "Time",
+        style: {
+          fontSize: "15px",
+        },
+      },
+      labels: {
+        style: {
+          fontSize: "15px",
+        },
       },
     },
     yaxis: {
       title: {
         text: "Soil moisture",
+        style: {
+          fontSize: "15px",
+        },
+      },
+      labels: {
+        style: {
+          fontSize: "15px",
+        },
       },
       min: 20,
       max: 50,
@@ -300,16 +424,24 @@ export default function Home() {
     chart: {
       toolbar: {
         show: true,
+        tools: {
+          download: false,  
+        }
       },
       zoom: {
         enabled: true,
       },
+      foreColor: "white"
     },
     stroke: {
       width: [0, 4],
     },
     title: {
-      // text: 'Temperature'
+      text: 'Light Intensity',
+      style: {
+        fontSize: "20px",
+        color: "white"
+      }
     },
     dataLabels: {
       enabled: true,
@@ -346,17 +478,154 @@ export default function Home() {
       type: { format: "hh:ss" },
       title: {
         text: "Time",
+        style: {
+          fontSize: "15px",
+        },
+      },
+      labels: {
+        style: {
+          fontSize: "15px",
+        },
       },
     },
     yaxis: [
       {
         title: {
           text: "Light Intensity",
+          style: {
+            fontSize: "15px",
+          },
+        },
+        labels: {
+          style: {
+            fontSize: "15px",
+          },
         },
       },
     ],
     grid: {
       show: true,
+    },
+    colors: [
+      "#18D8D8",
+      "#A9D794",
+      "#46AF78",
+      "#A93F55",
+      "#8C5E58",
+      "#2176FF",
+      "#33A1FD",
+      "#7A918D",
+      "#BAFF29",
+    ],
+    plotOptions: {
+      bar: {
+        borderRadius: 7,
+      },
+    },
+    dataLabels: { 
+      enabled: true,
+      // enabledOnSeries: undefined,
+      // formatter: function (val, opts) {
+      //   return val;
+      // },
+      textAnchor: "middle",
+      // distributed: false,
+      offsetX: 0,
+      offsetY: 0,
+      style: {
+        fontSize: "15px",
+        fontFamily: "Helvetica, Arial, sans-serif",
+        fontWeight: "200/500",
+        colors: ["black"],
+      },
+      background: {
+        enabled: true,
+        foreColor: "#fff",
+        padding: 3,
+        borderRadius: 2,
+        borderWidth: 1,
+        borderColor: "#fff",
+        opacity: 0.7,
+        // dropShadow: {
+        //   enabled: true,
+        //   top: 5,
+        //   left: 5,
+        //   blur: 1,
+        //   color: "#000",
+        //   opacity: 0.45,
+        // },
+      },
+      // dropShadow: {
+      //   enabled: false,
+      //   top: 5,
+      //   left: 5,
+      //   blur: 1,
+      //   color: "#000",
+      //   opacity: 0.45,
+      // },
+    },
+    forecastDataPoints: {
+      count: 5,
+      fillOpacity: 0.5,
+      strokeWidth: undefined,
+      dashArray: 4,
+    },
+    tooltip: {
+      enabled: true,
+      enabledOnSeries: undefined,
+      shared: true,
+      followCursor: true,
+      intersect: false,
+      inverseOrder: false,
+      custom: undefined,
+      fillSeriesColor: false,
+      theme: "dark",
+      style: {
+        fontSize: "13px",
+      },
+      onDatasetHover: {
+        highlightDataSeries: true,
+      },
+      x: {
+        show: true,
+        format: "dd MMM",
+        formatter: undefined,
+      },
+      y: {
+        formatter: undefined,
+        title: {
+          formatter: (seriesName) => seriesName,
+        },
+      },
+      z: {
+        formatter: undefined,
+        title: "Size: ",
+      },
+      marker: {
+        show: true,
+      },
+      items: {
+        display: "flex",
+      },
+      fixed: {
+        enabled: false,
+        position: "topRight",
+        offsetX: 0,
+        offsetY: 0,
+      },
+      
+    },
+    noData: {
+      text: "No Data",
+      align: "center",
+      verticalAlign: "middle",
+      offsetX: 0,
+      offsetY: 0,
+      style: {
+        color: ["white"],
+        fontSize: "20px",
+        fontFamily: undefined,
+      },
     },
   });
 
@@ -383,9 +652,19 @@ export default function Home() {
       },
       toolbar: {
         show: true,
+        tools: {
+          download: false
+        }
       },
       zoom: {
         enabled: true,
+      },
+      foreColor: "white",
+    },
+    title: {
+      text: "Humidity",
+      style: {
+        fontSize: "20px",
       },
     },
     colors: ["#77B6EA", "#545454"],
@@ -398,7 +677,7 @@ export default function Home() {
     grid: {
       borderColor: "#e7e7e7",
       row: {
-        colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
+        colors: ["white", "transparent"], // takes an array which will be repeated on columns
         opacity: 0.5,
       },
     },
@@ -436,14 +715,140 @@ export default function Home() {
       ],
       title: {
         text: "Time",
+        style: {
+          fontSize: "15px",
+        },
+      },
+      abels: {
+        style: {
+          fontSize: "15px",
+        },
       },
     },
     yaxis: {
       title: {
         text: "Humidity",
+        style: {
+          fontSize: "15px",
+        },
       },
       min: 20,
       max: 50,
+      labels: {
+        style: {
+          fontSize: "15px",
+        },
+      },
+    },
+    colors: [
+      "#18D8D8",
+      "#A9D794",
+      "#46AF78",
+      "#A93F55",
+      "#8C5E58",
+      "#2176FF",
+      "#33A1FD",
+      "#7A918D",
+      "#BAFF29",
+    ],
+    dataLabels: { 
+      enabled: true,
+      // enabledOnSeries: undefined,
+      // formatter: function (val, opts) {
+      //   return val;
+      // },
+      textAnchor: "middle",
+      // distributed: false,
+      offsetX: 0,
+      offsetY: 0,
+      style: {
+        fontSize: "15px",
+        fontFamily: "Helvetica, Arial, sans-serif",
+        fontWeight: "200/500",
+        colors: ["black"],
+      },
+      background: {
+        enabled: true,
+        foreColor: "#fff",
+        padding: 3,
+        borderRadius: 2,
+        borderWidth: 1,
+        borderColor: "#fff",
+        opacity: 0.7,
+        // dropShadow: {
+        //   enabled: true,
+        //   top: 5,
+        //   left: 5,
+        //   blur: 1,
+        //   color: "#000",
+        //   opacity: 0.45,
+        // },
+      },
+      // dropShadow: {
+      //   enabled: false,
+      //   top: 5,
+      //   left: 5,
+      //   blur: 1,
+      //   color: "#000",
+      //   opacity: 0.45,
+      // },
+    },
+    tooltip: {
+      enabled: true,
+      enabledOnSeries: undefined,
+      shared: true,
+      followCursor: true,
+      intersect: false,
+      inverseOrder: false,
+      custom: undefined,
+      fillSeriesColor: false,
+      theme: "dark",
+      style: {
+        fontSize: "13px",
+      },
+      onDatasetHover: {
+        highlightDataSeries: true,
+      },
+      x: {
+        show: true,
+        format: "dd MMM",
+        formatter: undefined,
+      },
+      y: {
+        formatter: undefined,
+        title: {
+          formatter: (seriesName) => seriesName,
+        },
+      },
+      z: {
+        formatter: undefined,
+        title: "Size: ",
+      },
+      marker: {
+        show: true,
+      },
+      items: {
+        display: "flex",
+      },
+      fixed: {
+        enabled: false,
+        position: "topRight",
+        offsetX: 0,
+        offsetY: 0,
+      },
+      
+    },
+    noData: {
+      text: "No Data",
+      align: "center",
+      verticalAlign: "middle",
+      offsetX: 0,
+      offsetY: 0,
+      style: {
+        color: ["white"],
+        fontSize: "20px",
+        fontFamily: undefined,
+      },
     },
   });
 
@@ -462,11 +867,16 @@ export default function Home() {
       stacked: true,
       toolbar: {
         show: true,
+        tools: {
+          download: false,
+        }
       },
       zoom: {
         enabled: true,
       },
+      foreColor: "white",
     },
+    
     responsive: [
       {
         breakpoint: 480,
@@ -485,6 +895,72 @@ export default function Home() {
         borderRadius: 10,
       },
     },
+    dataLabels: { 
+      enabled: true,
+      textAnchor: "middle",
+      offsetX: 0,
+      offsetY: 0,
+      style: {
+        fontSize: "15px",
+        fontFamily: "Helvetica, Arial, sans-serif",
+        fontWeight: "200/500",
+        colors: ["white"],
+      },
+      background: {
+        enabled: false,
+        foreColor: "#fff",
+        padding: 3,
+        borderRadius: 2,
+        borderWidth: 1,
+        borderColor: "#fff",
+        opacity: 0.7,
+      },
+    },
+    tooltip: {
+      enabled: true,
+      enabledOnSeries: undefined,
+      shared: true,
+      followCursor: true,
+      intersect: false,
+      inverseOrder: false,
+      custom: undefined,
+      fillSeriesColor: false,
+      theme: "dark",
+      style: {
+        fontSize: "13px",
+      },
+      onDatasetHover: {
+        highlightDataSeries: true,
+      },
+      x: {
+        show: true,
+        format: "dd MMM",
+        formatter: undefined,
+      },
+      y: {
+        formatter: undefined,
+        title: {
+          formatter: (seriesName) => seriesName,
+        },
+      },
+      z: {
+        formatter: undefined,
+        title: "Size: ",
+      },
+      marker: {
+        show: true,
+      },
+      items: {
+        display: "flex",
+      },
+      fixed: {
+        enabled: false,
+        position: "topRight",
+        offsetX: 0,
+        offsetY: 0,
+      },
+    },
+    color: ["white"],
     xaxis: {
       // type: 'datetime',
       categories: [
@@ -501,22 +977,42 @@ export default function Home() {
         "Nov",
         "Dec",
       ],
+      title: {
+        text: "Month",
+        style: {
+          fontSize: "15px",
+        },
+      },
+      labels: {
+        style: {
+          fontSize: "15px",
+        },
+      },
     },
 
     yaxis: {
       title: {
         text: "Number",
+        style: {
+          fontSize: "15px",
+        },
+      },
+      labels: {
+        style: {
+          fontSize: "15px",
+        },
       },
     },
-
+    colors: ['#2176FF', '#18D8D8'],
     legend: {
       position: "right",
       offsetY: 40,
+      fontSize: "14px",
     },
-    fill: {
-      color: "yellow",
-      opacity: 1,
-    },
+    // fill: {
+    //   color: "red",
+    //   opacity: 1,
+    // },
   });
 
   const [series_device, set_series_device] = useState([
