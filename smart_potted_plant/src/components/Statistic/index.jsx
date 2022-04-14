@@ -5,6 +5,64 @@ import axios from "axios";
 const API_URL = "http://localhost:3001/api/user/";
 
 export default function Home() {
+
+
+  const [temperatureData, setTemperatureData] = useState();
+  const pullData = async () => {
+    let response = await axios({
+      method: "get",
+      data: {},
+      url: API_URL + "get-all-data",
+      withCredentials: true,
+    });
+    await setTemperatureData(response.data.temperature)
+    console.log("respose:", response.data)
+  }
+
+  useEffect(() => {
+    pullData().then ((response) => {
+      console.log("in then reponse: ",  temperatureData);
+      
+    });
+    console.log("outside then")
+    // console.log("pull data: ", pullData());
+    // console.log("temper: ",temperatureData);
+
+    let value_list = [];
+    for (let i = 0; i < temperatureData.length; i++) {
+      console.log(temperatureData[i]);
+    }
+
+    // console.log("abcd: ", value_list);
+
+    // setSeries_temp([
+    //   {
+    //     type: "column",
+    //     name: "Temperature (Celcius)",
+    //     data: value_list,
+    //   },
+    // ])
+  })
+
+
+
+  // const [allData, setAllData] = useState( {
+  //     ledStatusData: [{ value: 0 }],
+  //     pumpStatusData: [{ value: 0 }],
+  //     temperatureData: [{ value: 0 }],
+  //     humiSoilData: [{ value: 0 }],
+  //     humiAirData: [{ value: 0 }],
+  //     lightData: [{ value: 0 }],
+
+  //     ledStatus: 0,
+  //     pumpStatus: 0,
+  //     temperature: 0,
+  //     humiSoil: 0,
+  //     humiAir: 0,
+  //     light: 0,
+  // } );
+
+
   const [options_temp, set_options_temp] = useState({
     stroke: {
       width: [0, 1],
@@ -206,7 +264,7 @@ export default function Home() {
     },
   });
 
-  const [series_temp, set_series_temp] = useState([
+  const [series_temp, setSeries_temp] = useState([
     {
       type: "column",
       name: "Temperature (Celcius)",

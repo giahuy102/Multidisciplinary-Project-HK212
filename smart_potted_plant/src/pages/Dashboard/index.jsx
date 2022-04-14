@@ -11,7 +11,7 @@ const API_URL = "http://localhost:3001/api/user/";
 export default class Dashboard extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
+    this.state = {  
       ledStatusData: [{ value: 0 }],
       pumpStatusData: [{ value: 0 }],
       temperatureData: [{ value: 0 }],
