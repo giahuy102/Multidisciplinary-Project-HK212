@@ -56,7 +56,7 @@ class ControlPanel extends Component {
           <div className="col-3 d-flex flex-wrap justify-content-center align-content-center">
             <GaugeChart
               nrOfLevels={10}
-              percent={this.props.humiAir / 100}
+              percent={this.props.humiAir / 950}
               textColor={"white"}
               needleColor={"lawngreen"}
               cornerRadius={100}
@@ -106,7 +106,7 @@ class ControlPanel extends Component {
             Air Humidity: {this.props.humiAir} %
           </div>
           <div className="col-3 d-flex justify-content-center h5">
-            Soil Humidity: {this.props.humiSoil} %
+            Soil Humidity: {this.props.humiSoil}
           </div>
           <div className="col-3 d-flex justify-content-center h5">
             Light: {this.props.light} LUX

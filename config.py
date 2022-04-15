@@ -6,7 +6,17 @@ ADAFRUIT_IO_USERNAME = "dat_huynh"
 ADAFRUIT_IO_KEY = "aio_nmMP12cvDwjXGwRSJ8uXY1HPT5DQ"
 FEED_IDS = ["bbc-led", "bbc-temp", "bbc-pump", "bbc-humi-air", "bbc-humi-soil"]
 PORT = "COM3"
-
+def get_serial_port():
+    import serial.tools.list_ports
+    port_list = serial.tools.list_ports.comports()
+    for port in port_list:
+        port_string = str(port)
+        if "USB Serial Device" in port_string:
+            return port_string.split(" ")[0]
+    return None
+input_port = get_serial_port()
+if input_port: PORT = input_port
+print("Serial port:", get_serial_port())
 client = MQTTClient(ADAFRUIT_IO_USERNAME, ADAFRUIT_IO_KEY)
 serial_port = serial.Serial(port=PORT, baudrate=115200)
 
@@ -60,17 +70,6 @@ def read_serial(serial_port):
             process_data(client, message[start: end + 1])
             message = "" if end == len(message) - 1 else message[end + 1:]
 
+
 def write_serial(serial_port, data):
     serial_port.write(data.encode("UTF-8"))
-
-def open_led():
-    write_serial(serial_port, "!1:LED:1")
-
-def close_led():
-    write_serial(serial_port, "!1:LED:0")
-
-def open_pump():
-    write_serial(serial_port, "!1:PUMP:1")
-
-def close_pump():
-    write_serial(serial_port, "!1:PUMP:0")

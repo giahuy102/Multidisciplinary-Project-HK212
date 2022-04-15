@@ -5,8 +5,6 @@ import axios from "axios";
 const API_URL = "http://localhost:3001/api/user/";
 
 export default function Home(props) {
-
-
   const [temperatureData, setTemperatureData] = useState();
   // const pullData = async () => {
   //   let response = await axios({
@@ -20,9 +18,25 @@ export default function Home(props) {
   // }
 
   useEffect(() => {
-    var value_list = props.temperatureData.map((ele)=> ele.value);
-    console.log(value_list)
+    var reversedTemparatureData = props.temperatureData.reverse();
+    var value_list = reversedTemparatureData.map((ele) => ele.value);
+    console.log(props.temperatureData);
     // console.log("abcd: ", value_list);
+
+    var time_list = reversedTemparatureData.map(
+      (ele) => new Date(ele.created_at)
+    );
+    console.log("time list: ", time_list);
+    time_list = time_list.map((element) => {
+      let hour = element.getHours();
+      let minute = element.getMinutes();
+      return String(hour) + ":" + String(minute);
+    });
+    console.log(time_list);
+
+    setLabel_temperature(time_list);
+    // console.log("asndanlkjsandas");
+    // set_options_temp()
 
     setSeries_temp([
       {
@@ -30,10 +44,8 @@ export default function Home(props) {
         name: "Temperature (Celcius)",
         data: value_list,
       },
-    ])
-  }, [])
-
-
+    ]);
+  }, [props]);
 
   // const [allData, setAllData] = useState( {
   //     ledStatusData: [{ value: 0 }],
@@ -51,6 +63,33 @@ export default function Home(props) {
   //     light: 0,
   // } );
 
+  const [label_temperature, setLabel_temperature] = useState([
+    "00:00",
+    "01:00",
+    "02:00",
+    "03:00",
+    "04:00",
+    "05:00",
+    "05:00",
+    "06:00",
+    "07:00",
+    "08:00",
+    "09:00",
+    "10:00",
+    "11:00",
+    "12:00",
+    "13:00",
+    "14:00",
+    "15:00",
+    "16:00",
+    "17:00",
+    "18:00",
+    "19:00",
+    "20:00",
+    "21:00",
+    "22:00",
+    "23:00",
+  ]);
 
   const [options_temp, set_options_temp] = useState({
     stroke: {
@@ -62,33 +101,34 @@ export default function Home(props) {
         fontSize: "20px",
       },
     },
-    labels: [
-      "00:00",
-      "01:00",
-      "02:00",
-      "03:00",
-      "04:00",
-      "05:00",
-      "05:00",
-      "06:00",
-      "07:00",
-      "08:00",
-      "09:00",
-      "10:00",
-      "11:00",
-      "12:00",
-      "13:00",
-      "14:00",
-      "15:00",
-      "16:00",
-      "17:00",
-      "18:00",
-      "19:00",
-      "20:00",
-      "21:00",
-      "22:00",
-      "23:00",
-    ],
+    // labels: [
+    //   "00:00",
+    //   "01:00",
+    //   "02:00",
+    //   "03:00",
+    //   "04:00",
+    //   "05:00",
+    //   "05:00",
+    //   "06:00",
+    //   "07:00",
+    //   "08:00",
+    //   "09:00",
+    //   "10:00",
+    //   "11:00",
+    //   "12:00",
+    //   "13:00",
+    //   "14:00",
+    //   "15:00",
+    //   "16:00",
+    //   "17:00",
+    //   "18:00",
+    //   "19:00",
+    //   "20:00",
+    //   "21:00",
+    //   "22:00",
+    //   "23:00",
+    // ],
+    labels: label_temperature,
     xaxis: {
       type: { format: "hh:ss" },
       title: {
@@ -138,15 +178,15 @@ export default function Home(props) {
         show: true,
         tools: {
           download: false,
-        }
-      }
+        },
+      },
     },
     plotOptions: {
       bar: {
         borderRadius: 7,
       },
     },
-    dataLabels: { 
+    dataLabels: {
       enabled: true,
       // enabledOnSeries: undefined,
       // formatter: function (val, opts) {
@@ -237,7 +277,6 @@ export default function Home(props) {
         offsetX: 0,
         offsetY: 0,
       },
-      
     },
     noData: {
       text: "No Data",
@@ -284,7 +323,7 @@ export default function Home(props) {
           zoomout: true,
           pan: true,
           reset: true | '<img src="/static/icons/reset.png" width="20">',
-          customIcons: []
+          customIcons: [],
         },
       },
       zoom: {
@@ -303,7 +342,7 @@ export default function Home(props) {
       "#7A918D",
       "#BAFF29",
     ],
-    dataLabels: { 
+    dataLabels: {
       enabled: true,
       // enabledOnSeries: undefined,
       // formatter: function (val, opts) {
@@ -372,7 +411,6 @@ export default function Home(props) {
         offsetX: 0,
         offsetY: 0,
       },
-      
     },
     noData: {
       text: "No Data",
@@ -472,23 +510,23 @@ export default function Home(props) {
       toolbar: {
         show: true,
         tools: {
-          download: false,  
-        }
+          download: false,
+        },
       },
       zoom: {
         enabled: true,
       },
-      foreColor: "white"
+      foreColor: "white",
     },
     stroke: {
       width: [0, 4],
     },
     title: {
-      text: 'Light Intensity',
+      text: "Light Intensity",
       style: {
         fontSize: "20px",
-        color: "white"
-      }
+        color: "white",
+      },
     },
     dataLabels: {
       enabled: true,
@@ -569,7 +607,7 @@ export default function Home(props) {
         borderRadius: 7,
       },
     },
-    dataLabels: { 
+    dataLabels: {
       enabled: true,
       // enabledOnSeries: undefined,
       // formatter: function (val, opts) {
@@ -660,7 +698,6 @@ export default function Home(props) {
         offsetX: 0,
         offsetY: 0,
       },
-      
     },
     noData: {
       text: "No Data",
@@ -700,8 +737,8 @@ export default function Home(props) {
       toolbar: {
         show: true,
         tools: {
-          download: false
-        }
+          download: false,
+        },
       },
       zoom: {
         enabled: true,
@@ -798,7 +835,7 @@ export default function Home(props) {
       "#7A918D",
       "#BAFF29",
     ],
-    dataLabels: { 
+    dataLabels: {
       enabled: true,
       // enabledOnSeries: undefined,
       // formatter: function (val, opts) {
@@ -883,7 +920,6 @@ export default function Home(props) {
         offsetX: 0,
         offsetY: 0,
       },
-      
     },
     noData: {
       text: "No Data",
@@ -916,14 +952,14 @@ export default function Home(props) {
         show: true,
         tools: {
           download: false,
-        }
+        },
       },
       zoom: {
         enabled: true,
       },
       foreColor: "white",
     },
-    
+
     responsive: [
       {
         breakpoint: 480,
@@ -942,7 +978,7 @@ export default function Home(props) {
         borderRadius: 10,
       },
     },
-    dataLabels: { 
+    dataLabels: {
       enabled: true,
       textAnchor: "middle",
       offsetX: 0,
@@ -1050,7 +1086,7 @@ export default function Home(props) {
         },
       },
     },
-    colors: ['#2176FF', '#18D8D8'],
+    colors: ["#2176FF", "#18D8D8"],
     legend: {
       position: "right",
       offsetY: 40,
