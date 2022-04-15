@@ -2,15 +2,14 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-const dbConnection = require('./services/database/connection')
-const bodyParser = require("body-parser")
+const dbConnection = require('./services/database/connection');
+const bodyParser = require("body-parser");
 dotenv.config(); //load config from .env to process.env
-
 const cors = require('cors') //cross origin
+
 app.use(
     cors({
-        origin: process.env.CLIENT_ADDRESS, // <-- location of the react app were connecting to
-        credentials: true,
+        origin: "*", // <-- location of the react app were connecting to
     })
 );
 
@@ -42,4 +41,10 @@ app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     res.send("URL Not Found!");
 });
-app.listen(process.env.PORT, () => console.log(`Server is running at http://localhost:${process.env.PORT}`));
+
+const server = app.listen(process.env.PORT, () => console.log(`Server is running at http://localhost:${process.env.PORT}`));
+global.io = require("socket.io")(server, { cors: { origin: "*" } });
+global.io.on("connection", socket => {
+    console.log("Client server socket connected, id: ", socket.id);
+    socket.on("disconnect", () => { console.log("Client server socket disconnected!"); })
+});

@@ -8,13 +8,10 @@ const { username } = require('../services/mqtt/config');
 const axios = require("axios");
 
 const settings = require("../services/mqtt/config");
-
 const subcriber = require("../services/mqtt/subcriber");
-const { mapReduce } = require('../model/User');
 const client = subcriber.subcribe((err) => console.log(err));
 const Publisher = require("../services/mqtt/publisher").Publisher;
 const publisher = new Publisher(client);
-
 router.post('/register', async(req, res) => {
     //validate before saving to database
     const { error } = registerValidation(req.body);
@@ -84,7 +81,7 @@ router.get("/get-all-data", async(req, res) => {
     let maxRecordGet = 10;
     let temperature = (
         await axios.get(
-            `https://io.adafruit.com/api/v2/${settings.feedKeyDetail.temprature}/data`, { params: { limit: maxRecordGet } }
+            `https://io.adafruit.com/api/v2/${settings.feedKeyDetail.temperature}/data`, { params: { limit: maxRecordGet } }
         )
     ).data;
     let ledStatus = (

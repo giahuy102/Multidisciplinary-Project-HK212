@@ -13,6 +13,8 @@ const subcribe = (callback = (err) => {}) => {
         });
         client.on('message', function(feedID, data) {
             console.log(`Data received from ${feedID}: ${data}`);
+            // emit to server
+            global.io.emit("new_data", { feedID: feedID, data: String(data) });
         });
         return client;
     } catch (err) {
