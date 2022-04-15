@@ -63,10 +63,10 @@ def read_serial(serial_port):
     bytes_to_read = serial_port.inWaiting()
     if (bytes_to_read > 0):
         message += serial_port.read(bytes_to_read).decode("UTF-8")
+        print("Serial data:", message)
         while "#" in message and "!" in message:
             start = message.find("!")
             end = message.find("#")
-            print("Serial data:", message)
             process_data(client, message[start: end + 1])
             message = "" if end == len(message) - 1 else message[end + 1:]
 
