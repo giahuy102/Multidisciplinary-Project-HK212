@@ -4,45 +4,34 @@ import { useState } from "react";
 import axios from "axios";
 const API_URL = "http://localhost:3001/api/user/";
 
-export default function Home() {
+export default function Home(props) {
 
 
   const [temperatureData, setTemperatureData] = useState();
-  const pullData = async () => {
-    let response = await axios({
-      method: "get",
-      data: {},
-      url: API_URL + "get-all-data",
-      withCredentials: true,
-    });
-    await setTemperatureData(response.data.temperature)
-    console.log("respose:", response.data)
-  }
+  // const pullData = async () => {
+  //   let response = await axios({
+  //     method: "get",
+  //     data: {},
+  //     url: API_URL + "get-all-data",
+  //     withCredentials: true,
+  //   });
+  //   await setTemperatureData(response.data.temperature)
+  //   console.log("respose:", response.data)
+  // }
 
   useEffect(() => {
-    pullData().then ((response) => {
-      console.log("in then reponse: ",  temperatureData);
-      
-    });
-    console.log("outside then")
-    // console.log("pull data: ", pullData());
-    // console.log("temper: ",temperatureData);
-
-    let value_list = [];
-    for (let i = 0; i < temperatureData.length; i++) {
-      console.log(temperatureData[i]);
-    }
-
+    var value_list = props.temperatureData.map((ele)=> ele.value);
+    console.log(value_list)
     // console.log("abcd: ", value_list);
 
-    // setSeries_temp([
-    //   {
-    //     type: "column",
-    //     name: "Temperature (Celcius)",
-    //     data: value_list,
-    //   },
-    // ])
-  })
+    setSeries_temp([
+      {
+        type: "column",
+        name: "Temperature (Celcius)",
+        data: value_list,
+      },
+    ])
+  }, [])
 
 
 
@@ -199,12 +188,12 @@ export default function Home() {
       //   opacity: 0.45,
       // },
     },
-    forecastDataPoints: {
-      count: 5,
-      fillOpacity: 0.5,
-      strokeWidth: undefined,
-      dashArray: 4,
-    },
+    // forecastDataPoints: {
+    //   count: 5,
+    //   fillOpacity: 0.5,
+    //   strokeWidth: undefined,
+    //   dashArray: 4,
+    // },
     tooltip: {
       enabled: true,
       enabledOnSeries: undefined,

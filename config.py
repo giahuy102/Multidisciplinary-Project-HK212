@@ -23,8 +23,11 @@ def on_disconnect(client):
 
 def on_message(client, feed_id, payload):
     print("Data received from", feed_id, ":", payload)
-    write_serial(serial_port, feed_id + " " + payload + "\n")
-
+    #write_serial(serial_port, feed_id + " " + payload + "\n")
+    payload = "on" if payload != "0" else "off"
+    if feed_id == "bbc-led": write_serial(serial_port, "led_" + payload + "#")
+    elif feed_id == "bbc-pump": write_serial(serial_port, "pump_" + payload + "#")
+  
 client.on_connect = on_connect
 client.on_disconnect = on_disconnect
 client.on_message = on_message

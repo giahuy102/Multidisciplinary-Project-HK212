@@ -75,7 +75,7 @@ export default class Dashboard extends React.Component {
       <div className="col">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/statistic" element={<Statistic />} />
+          <Route path="/statistic" element={<Statistic temperatureData={this.state.temperatureData}/>} />
           <Route
             path="/control-panel"
             element={
