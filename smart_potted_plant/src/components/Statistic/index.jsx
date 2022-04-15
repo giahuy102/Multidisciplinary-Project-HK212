@@ -20,19 +20,19 @@ export default function Home(props) {
   useEffect(() => {
     var reversedTemparatureData = props.temperatureData.reverse();
     var value_list = reversedTemparatureData.map((ele) => ele.value);
-    console.log(props.temperatureData);
+    //console.log(props.temperatureData);
     // console.log("abcd: ", value_list);
 
     var time_list = reversedTemparatureData.map(
       (ele) => new Date(ele.created_at)
     );
-    console.log("time list: ", time_list);
+    //console.log("time list: ", time_list);
     time_list = time_list.map((element) => {
       let hour = element.getHours();
       let minute = element.getMinutes();
       return String(hour) + ":" + String(minute);
     });
-    console.log(time_list);
+    //console.log(time_list);
 
     setLabel_temperature(time_list);
     // console.log("asndanlkjsandas");

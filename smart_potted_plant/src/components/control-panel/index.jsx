@@ -2,6 +2,7 @@ import { color } from "d3-color";
 import { withRouter } from "../../withRouter";
 import { Component } from "react";
 import axios from "axios";
+import ReactApexChart from "react-apexcharts";
 import "./style.css";
 //import "../../components/Buttons/SwitchButton"
 import Switch from "../switch";
@@ -13,7 +14,173 @@ const API_URL = "http://localhost:3001/api/user/";
 class ControlPanel extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      series: [parseInt(this.props.light) / 10],
+      options: {
+        chart: {
+          height: 350,
+          type: "radialBar",
+          toolbar: {
+            show: false,
+          },
+        },
+        plotOptions: {
+          radialBar: {
+            startAngle: -135,
+            endAngle: 225,
+            hollow: {
+              margin: 0,
+              size: "70%",
+              background: "#fff",
+              image: undefined,
+              imageOffsetX: 0,
+              imageOffsetY: 0,
+              position: "front",
+              dropShadow: {
+                enabled: true,
+                top: 3,
+                left: 0,
+                blur: 4,
+                opacity: 0.24,
+              },
+            },
+            track: {
+              background: "#fff",
+              strokeWidth: "67%",
+              margin: 0, // margin is in pixels
+              dropShadow: {
+                enabled: true,
+                top: -3,
+                left: 0,
+                blur: 4,
+                opacity: 0.35,
+              },
+            },
+
+            dataLabels: {
+              show: true,
+              name: {
+                offsetY: -10,
+                show: true,
+                color: "#888",
+                fontSize: "17px",
+              },
+              value: {
+                formatter: function (val) {
+                  return parseInt(val * 10);
+                },
+                color: "#111",
+                fontSize: "36px",
+                show: true,
+              },
+            },
+          },
+        },
+        fill: {
+          type: "gradient",
+          gradient: {
+            shade: "dark",
+            type: "horizontal",
+            shadeIntensity: 0.5,
+            gradientToColors: ["#ABE5A1"],
+            inverseColors: true,
+            opacityFrom: 1,
+            opacityTo: 1,
+            stops: [0, 100],
+          },
+        },
+        stroke: {
+          lineCap: "round",
+        },
+        labels: ["Light"],
+      },
+    };
   }
+  // on props change
+  componentDidUpdate = (previousProps) => {
+    if (previousProps == this.props) return;
+    this.setState({
+      series: [parseInt(this.props.light) / 10],
+      options: {
+        chart: {
+          height: 350,
+          type: "radialBar",
+          toolbar: {
+            show: false,
+          },
+        },
+        plotOptions: {
+          radialBar: {
+            startAngle: -135,
+            endAngle: 225,
+            hollow: {
+              margin: 0,
+              size: "70%",
+              background: "#fff",
+              image: undefined,
+              imageOffsetX: 0,
+              imageOffsetY: 0,
+              position: "front",
+              dropShadow: {
+                enabled: true,
+                top: 3,
+                left: 0,
+                blur: 4,
+                opacity: 0.24,
+              },
+            },
+            track: {
+              background: "#fff",
+              strokeWidth: "67%",
+              margin: 0, // margin is in pixels
+              dropShadow: {
+                enabled: true,
+                top: -3,
+                left: 0,
+                blur: 4,
+                opacity: 0.35,
+              },
+            },
+
+            dataLabels: {
+              show: true,
+              name: {
+                offsetY: -10,
+                show: true,
+                color: "#888",
+                fontSize: "17px",
+              },
+              value: {
+                formatter: function (val) {
+                  return parseInt(val * 10);
+                },
+                color: "#111",
+                fontSize: "36px",
+                show: true,
+              },
+            },
+          },
+        },
+        fill: {
+          type: "gradient",
+          gradient: {
+            shade: "dark",
+            type: "horizontal",
+            shadeIntensity: 0.5,
+            gradientToColors: ["#ABE5A1"],
+            inverseColors: true,
+            opacityFrom: 1,
+            opacityTo: 1,
+            stops: [0, 100],
+          },
+        },
+        stroke: {
+          lineCap: "round",
+        },
+        labels: ["Light"],
+      },
+    });
+  };
   liquidBorderColor = "white";
   liquidWaveColor = "#FAFAD2";
   render = () => {
@@ -24,7 +191,7 @@ class ControlPanel extends Component {
           <div className="form-group d-flex align-items-center w-50 justify-content-center">
             <label style={{ fontSize: 30, paddingRight: 30 }}>LED</label>
             <Switch
-              value={this.props.ledStatus}
+              value={parseInt(this.props.ledStatus)}
               onClick={() => this.props.changeDeviceStatus("led")}
               onColor="#EF476F"
               id={"switch-led"}
@@ -34,7 +201,7 @@ class ControlPanel extends Component {
           <div className="form-group d-flex align-items-center w-50 justify-content-center">
             <label style={{ fontSize: 30, paddingRight: 30 }}>PUMP</label>
             <Switch
-              value={this.props.pumpStatus}
+              value={parseInt(this.props.pumpStatus)}
               onClick={() => this.props.changeDeviceStatus("pump")}
               onColor="#EF476F"
               id={"switch-pump"}
@@ -45,7 +212,7 @@ class ControlPanel extends Component {
           <div className="col-3 d-flex flex-wrap justify-content-center align-content-center">
             <Thermometer
               theme="dark"
-              value={this.props.temperature}
+              value={parseInt(this.props.temperature)}
               max="100"
               steps="1"
               format="°C"
@@ -55,28 +222,26 @@ class ControlPanel extends Component {
           </div>
           <div className="col-3 d-flex flex-wrap justify-content-center align-content-center">
             <GaugeChart
-              nrOfLevels={10}
-              percent={this.props.humiAir / 950}
+              nrOfLevels={15}
+              percent={parseInt(this.props.humiAir) / 100}
               textColor={"white"}
               needleColor={"lawngreen"}
               cornerRadius={100}
             />
           </div>
           <div className="col-3 d-flex flex-wrap justify-content-center align-content-center">
-            <GaugeChart
+            {/* <GaugeChart
               nrOfLevels={20}
-              percent={this.props.humiSoil / 100}
+              percent={this.props.humiSoil / 950}
               textColor={"white"}
               needleColor={"yellow"}
-            />
-          </div>
-          <div className="col-3 d-flex flex-wrap justify-content-center align-content-center">
+            /> */}
             <LiquidFillGauge
               width={200}
               height={300}
               percent={<tspan style={{ fontSize: 50 }}></tspan>}
-              value={(this.props.light / 1000) * 100}
-              notPercentValue={this.props.light}
+              value={(parseInt(this.props.humiSoil) / 900) * 100}
+              notPercentValue={parseInt(this.props.humiSoil)}
               maxValue={1000}
               riseAnimation
               waveAnimation
@@ -95,6 +260,14 @@ class ControlPanel extends Component {
               waveTextStyle={{
                 fill: color("black").toString(),
               }}
+            />
+          </div>
+          <div className="col-3 d-flex flex-wrap justify-content-center align-content-center">
+            <ReactApexChart
+              options={this.state.options}
+              series={this.state.series}
+              type="radialBar"
+              height={300}
             />
           </div>
         </div>
