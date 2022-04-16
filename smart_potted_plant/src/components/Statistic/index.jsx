@@ -1,6 +1,4 @@
 import React, { useEffect } from "react";
-import Chart from "react-apexcharts";
-import { useState } from "react";
 import Temperature from "./temperature";
 import SoilMoisture from "./soi_moisture";
 import LightIntensity from "./light_intensity";
@@ -138,13 +136,6 @@ export default function Home(props) {
 
           <div style={{ paddingLeft: "145px" }}>
             <Device ledStatus = {props.ledStatus} pumpStatus = {props.pumpStatus}/>
-            {/* <Chart
-              options={options_device}
-              series={series_device}
-              type="bar"
-              height="400"
-              width="980"
-            /> */}
           </div>
         </div>
       </div>
