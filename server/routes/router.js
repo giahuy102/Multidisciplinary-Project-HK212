@@ -78,7 +78,7 @@ router.post('/login', async(req, res) => {
 });
 router.get("/get-all-data", async(req, res) => {
     // Check jwt
-    let maxRecordGet = 10;
+    let maxRecordGet = 20;
     let temperature = (
         await axios.get(
             `https://io.adafruit.com/api/v2/${settings.feedKeyDetail.temperature}/data`, { params: { limit: maxRecordGet } }
