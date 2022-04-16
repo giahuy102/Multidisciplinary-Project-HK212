@@ -8,6 +8,7 @@ import Device from "./device";
 
 export default function Home(props) {
 
+
   const each_param_block = {
     backgroundColor: "#d7e2e9",
     border: "1px solid #d7e2e9",

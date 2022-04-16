@@ -6,7 +6,7 @@ export default function LightIntensity(props) {
     useEffect(() => {
         // console.log("props: ", props.lightIntensity)
 
-        var reversedData = props.lightIntensity.reverse();
+        var reversedData = props.lightIntensity.map(ele => ele).reverse();
         var value_list=[], time_list=[];
         reversedData = reversedData.filter( (ele) => {
           var ele_date = new Date(ele.created_at);

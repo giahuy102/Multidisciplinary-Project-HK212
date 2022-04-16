@@ -6,7 +6,7 @@ export default function Humidity(props) {
     useEffect(() => {
         // console.log("props: ", props.humidity)
         
-        var reversedData = props.humidity.reverse();
+        var reversedData = props.humidity.map(ele => ele).reverse();
         var value_list=[], time_list=[];
         reversedData = reversedData.filter( (ele) => {
           var ele_date = new Date(ele.created_at);

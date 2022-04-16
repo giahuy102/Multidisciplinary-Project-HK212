@@ -4,25 +4,32 @@ import { useState } from "react";
 
 export default function Device(props) {
     useEffect(() => {
+        var ledStatus = props.ledStatus.map(ele => ele);
+        var pumpStatus = props.pumpStatus.map(ele => ele);
         var count_led = new Array(13).fill(0);  // each element is count number for each month (except index 0)
         var count_pump = new Array(13).fill(0);
         var today = new Date();
-        props.ledStatus.filter( (ele) => {
+        ledStatus.filter( (ele) => {
           if (ele.value == 1) {
             var ele_date = new Date(ele.created_at);
             if (ele_date.getFullYear() == today.getFullYear()) {
               count_led[ele_date.getMonth() + 1]++;
             }
+            return ele_date.getFullYear() == today.getFullYear();
           }
         })
-        props.pumpStatus.filter( (ele) => {
+        pumpStatus.filter( (ele) => {
           if (ele.value == 1) {
             var ele_date = new Date(ele.created_at);
             if (ele_date.getFullYear() == today.getFullYear()) {
               count_pump[ele_date.getMonth() + 1]++;
             }
+            return ele_date.getFullYear() == today.getFullYear();
           }
         })
+
+        // console.log("count_led: ", count_led);
+        // console.log("count_pump: ", count_pump);
 
         set_series_device(prev => ( [{...prev, data: count_led.slice(1)}, {...prev, data: count_pump.slice(1)}] ));
     }, [props])

@@ -5,7 +5,8 @@ import { useState } from "react";
 export default function Temperature(props) {
     useEffect(() => {
         // console.log("props: ", props.temperatureData)
-        var reversedData = props.temperatureData.reverse();
+        
+        var reversedData = props.temperatureData.map(ele => ele).reverse();
         var value_list=[], time_list=[];
         reversedData = reversedData.filter( (ele) => {
           var ele_date = new Date(ele.created_at);
@@ -14,6 +15,7 @@ export default function Temperature(props) {
             value_list.push(ele.value);
             time_list.push(ele_date.getHours() + ':' + ele_date.getMinutes());
           }
+          return ele_date.getDate() == today.getDate();
         });
 
         // console.log("value list child temperature: ", value_list)

@@ -6,7 +6,7 @@ export default function SoilMoisture(props) {
     useEffect(() => {
         // console.log("props: ", props.soilMoisture)
 
-        var reversedData = props.soilMoisture.reverse();
+        var reversedData = props.soilMoisture.map(ele => ele).reverse();
         var value_list=[], time_list=[];
         reversedData = reversedData.filter( (ele) => {
           var ele_date = new Date(ele.created_at);
