@@ -66,12 +66,13 @@ export default class Dashboard extends React.Component {
     this.io.on("new_data", (message) => {
       let feedID = message.feedID;
       let data = message.data;
+      console.log(data)
       if (feedID == this.feedKey.led) {
         let newLedStatusData = [data].concat(
           this.state.ledStatusData.slice(0, -1)
         );
         return this.setState({
-          ledStatus: data,
+          ledStatus: data.value,
           ledStatusData: newLedStatusData,
         });
       }
@@ -80,7 +81,7 @@ export default class Dashboard extends React.Component {
           this.state.pumpStatusData.slice(0, -1)
         );
         return this.setState({
-          pumpStatus: data,
+          pumpStatus: data.value,
           pumpStatusData: newPumpStatusData,
         });
       }
@@ -88,29 +89,30 @@ export default class Dashboard extends React.Component {
         let newTemperatureData = [data].concat(
           this.state.temperatureData.slice(0, -1)
         );
+              console.log(this.state.temperatureData);
         return this.setState({
-          temperature: data,
+          temperature: data.value,
           temperatureData: newTemperatureData,
         });
       }
       if (feedID == this.feedKey.humiAir) {
         let newHumiAirData = [data].concat(this.state.humiAir.slice(0, -1));
         return this.setState({
-          humiAir: data,
+          humiAir: data.value,
           humiAirData: newHumiAirData,
         });
       }
       if (feedID == this.feedKey.humiSoil) {
         let newHumiSoilData = [data].concat(this.state.humiSoil.slice(0, -1));
         return this.setState({
-          humiSoil: data,
+          humiSoil: data.value,
           humiSoilData: newHumiSoilData,
         });
       }
       if (feedID == this.feedKey.light) {
         let newLightData = [data].concat(this.state.lightData.slice(0, -1));
         return this.setState({
-          light: data,
+          light: data.value,
           lightData: newLightData,
         });
       }

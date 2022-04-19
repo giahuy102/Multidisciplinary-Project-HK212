@@ -20,7 +20,6 @@ export default function Temperature(props) {
 
         // console.log("value list child temperature: ", value_list)
         // console.log("time list child temperature: ", time_list)
-
         setSeries_temp(prev => ([{...prev, data: value_list}]))
         set_options_temp(prev => ({...prev, labels: time_list}));
     }, [props])

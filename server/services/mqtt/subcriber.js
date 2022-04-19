@@ -1,7 +1,6 @@
 const settings = require('./config');
 const connection = require('./connection');
-
-
+const axios = require("axios");
 const subcribe = (callback = (err) => {}) => {
     try {
         const client = connection.connect();
@@ -11,10 +10,13 @@ const subcribe = (callback = (err) => {}) => {
                 console.log('Subcribe topic ' + topic);
             }
         });
-        client.on('message', function(feedID, data) {
+        client.on('message', async function(feedID, data, package) {
             console.log(`Data received from ${feedID}: ${data}`);
             // emit to server
-            global.io.emit("new_data", { feedID: feedID, data: String(data) });
+            let new_data = await axios.get(
+                `https://io.adafruit.com/api/v2/${feedID}/data`, { params: { limit: 1 } }
+            );
+            global.io.emit("new_data", { feedID: feedID, data: new_data.data[0] });
         });
         return client;
     } catch (err) {
