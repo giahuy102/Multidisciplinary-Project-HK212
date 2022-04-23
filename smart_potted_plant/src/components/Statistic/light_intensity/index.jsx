@@ -11,7 +11,7 @@ export default function LightIntensity(props) {
         reversedData = reversedData.filter( (ele) => {
           var ele_date = new Date(ele.created_at);
           var today = new Date();
-          if (ele_date.getDate() == today.getDate()) {
+          if (ele_date.getDate() == 15) {
             value_list.push(ele.value);
             time_list.push(ele_date.getHours() + ':' + ele_date.getMinutes());
           }

@@ -156,7 +156,7 @@ class ControlPanel extends Component {
               height={300}
               percent={<tspan style={{ fontSize: 50 }}></tspan>}
               value={(parseInt(this.props.humiSoil) / 900) * 100}
-              notPercentValue={parseInt(this.props.humiSoil)}
+              notPercentValue={parseInt(this.props.humiSoil)} 
               maxValue={1000}
               riseAnimation
               waveAnimation
