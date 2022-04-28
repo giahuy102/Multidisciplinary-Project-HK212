@@ -31,7 +31,7 @@ export default function Home(props) {
         <p style={{ fontSize: "40px", fontWeight: "bold" }}>Statistic</p>
       </div>
 
-      <div className="container">
+      <div className="container" style={{ maxWidth: 1250 }}>
         <div className="row">
           <h2 style={{ fontWeight: "bold", color: "#15bc31" }}>Overview</h2>
           <div
@@ -120,23 +120,23 @@ export default function Home(props) {
           <h2 style={{ fontWeight: "bold", color: "#15bc31" }}>More</h2>
 
           <div style={{ paddingLeft: "145px" }}>
-            <Temperature temperatureData = {props.temperatureData}/>
+            <Temperature temperatureData={props.temperatureData} />
           </div>
 
           <div style={{ paddingLeft: "145px" }}>
-            <SoilMoisture soilMoisture = {props.soilMoisture} />
+            <SoilMoisture soilMoisture={props.soilMoisture} />
           </div>
 
           <div style={{ paddingLeft: "145px" }}>
-            <LightIntensity lightIntensity = {props.lightIntensity}/>
+            <LightIntensity lightIntensity={props.lightIntensity} />
           </div>
 
           <div style={{ paddingLeft: "145px" }}>
-            <Humidity humidity = {props.humidity}/>
+            <Humidity humidity={props.humidity} />
           </div>
 
           <div style={{ paddingLeft: "145px" }}>
-            <Device ledStatus = {props.ledStatus} pumpStatus = {props.pumpStatus}/>
+            <Device ledStatus={props.ledStatus} pumpStatus={props.pumpStatus} />
           </div>
         </div>
       </div>
