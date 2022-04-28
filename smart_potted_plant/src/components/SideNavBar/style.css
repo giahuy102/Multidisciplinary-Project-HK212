@@ -10,9 +10,24 @@ ul {
     padding-left: 0;
 }
 
-.nav-bar {
+.notify-wrapper {
+    margin-top: 600px;
+}
+
+.wrapper {
     width: 261px;
     position: relative;
+    transition: all 0.3s;
+    height: 100vh;
+}
+
+.wrapper-inactive {
+    width: 81.95px;
+}
+
+.nav-bar {
+    width: 261px;
+    position: fixed;
     /* height: 100vh; */
     min-height: 750px;
     background-color: #122939;

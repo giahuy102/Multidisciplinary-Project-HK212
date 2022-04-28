@@ -1,0 +1,18 @@
+.top-nav-wrap {
+    position: relative;
+    height: 60px;
+
+}
+
+.top-nav {
+    /* background-color: #F7F8FC; */
+    position: relative;
+    /* width: inherit; */
+    background-color: #122939;
+    z-index: 10;
+}
+
+.col {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}

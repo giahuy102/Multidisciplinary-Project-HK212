@@ -14,41 +14,53 @@ import "./style.css";
 
 import Statistic from '../Statistic'
 
+
 export default function SideNavBar() {
   const [active, setActive] = useState(true);
+
+
+
+
   return (
     <IconContext.Provider value={{ color: "#fff" }}>
-      <nav className={active ? "nav-bar" : "nav-bar nav-bar-inactive"}>
-        
-        <img src={require("../../assets/images/logo.png")}></img>
-        <Link
-          className="transition-button"
-          to="#"
-          onClick={() => setActive(!active)}
-        >
-          <FaIcons.FaBars className="fabar-icon" />
-        </Link>
-        <ul>
-          <li>
-            <Link to="/">
-              <AiIcons.AiFillHome className="icon" />
-              <span>Home</span>
-            </Link>
-          </li>
-          <li>
-            <Link to="/statistic">
-              <AiIcons.AiOutlineBarChart className="icon" />
-              <span>Statistic</span>
-            </Link>
-          </li>
-          <li>
-            <Link to="/control-panel">
-              <AiIcons.AiOutlineTool className="icon" />
-              <span>Control Panel</span>
-            </Link>
-          </li>
-        </ul>
-      </nav>
+      <div className={active ? "wrapper" : "wrapper wrapper-inactive"}>
+        <nav className={active ? "nav-bar" : "nav-bar nav-bar-inactive"}>
+          
+          <img src={require("../../assets/images/logo.png")}></img>
+          <Link
+            className="transition-button"
+            to="#"
+            onClick={() => setActive(!active)}
+          >
+            <FaIcons.FaBars className="fabar-icon" />
+          </Link>
+          <ul>
+            <li>
+              <Link to="/">
+                <AiIcons.AiFillHome className="icon" />
+                <span>Home</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="/statistic">
+                <AiIcons.AiOutlineBarChart className="icon" />
+                <span>Statistic</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="/control-panel">
+                <AiIcons.AiOutlineTool className="icon" />
+                <span>Control Panel</span>
+              </Link>
+            </li>
+          </ul>
+        </nav>
+      <div className="notify-wrapper">
+
+      </div>
+      
+      </div>
+      
     </IconContext.Provider>
   );
 }
