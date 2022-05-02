@@ -5,6 +5,7 @@ import SideNavBar from "../../components/SideNavBar/";
 import Home from "../../components/Home/";
 import Statistic from "../../components/Statistic/";
 import ControlPanel from "../../components/control-panel";
+import Schedule from "../../components/Schedule/index";
 import "./style.css";
 const API_URL = "http://localhost:3001/api/user/";
 
@@ -90,6 +91,7 @@ export default class Dashboard extends React.Component {
               />
             }
           />
+          <Route path="/schedule" element={<Schedule />} />
         </Routes>
       </div>
     </div>

@@ -1,0 +1,46 @@
+.background {
+  /* background: url(./bg.png);
+    background-size: cover;
+    height: 100%; */
+  background-color: #0F2330;
+  height: 100%;
+  color: white;
+}
+
+.led-ele {
+  background-color: #d7e2e9;
+  border: solid 2px grey;
+  padding: 2%;
+  border-radius: 20px;
+}
+
+Modal {
+  background-color: #d7e2e9;
+}
+
+form {
+  text-align: center;
+}
+
+#start {
+  zoom: 2;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+#long {
+  width: 15%;
+  border-radius: 5px;
+  padding: 1%;
+}
+
+#date {
+  border-radius: 5px;
+  padding: 1%;
+}
+
+#note {
+  width: 90%;
+  border-radius: 5px;
+  padding: 1%;
+}

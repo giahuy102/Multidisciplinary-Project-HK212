@@ -47,6 +47,12 @@ export default function SideNavBar() {
               <span>Control Panel</span>
             </Link>
           </li>
+          <li>
+            <Link to="/schedule">
+              <AiIcons.AiOutlineCalendar className="icon" />
+              <span>Schedule</span>
+            </Link>
+          </li>
         </ul>
       </nav>
     </IconContext.Provider>
