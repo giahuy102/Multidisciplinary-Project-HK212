@@ -24,7 +24,6 @@ class Schedule extends Component {
       loading: false,
 
       isEdit: false,
-      deleteId: "",
       title: "",
       typ: 0,                                 // 0: LED - 1: PUMP
 
@@ -36,10 +35,11 @@ class Schedule extends Component {
       defaultDay: 0,
       defaultNote: "",
 
+      id: "",
       start: "",
       long: 1,
       date: "",
-      day: 0b0,
+      day: 0b0000000,
       note: "",
 
     }
@@ -63,7 +63,7 @@ class Schedule extends Component {
     if (mode === 1) {                           // mode: edit
       this.setState({
         isEdit: true,
-        deleteId: device.id,
+        id: device.id,
         
         defaultStart: device.start,
         defaultDate: device.date,
@@ -90,10 +90,18 @@ class Schedule extends Component {
     }
     else {                                // mode: create
       this.setState({
+        isEdit: false,
         defaultStart: _time,
         defaultDate: _day,
+        defaultDay: 0,
+        defaultLong: 1,
+        defaultNote: "",
+        
         start: _time,
         date: _day,
+        day: 0,
+        long: 1,
+        note: "",
       });
       if (typ === 0) {
         this.setState({
@@ -107,17 +115,6 @@ class Schedule extends Component {
       }
     }
   };
-  handleReadCheckBox = () => { console.log("Vô read")
-    var checkbox = document.getElementsByName('day');
-    var result = 0; console.log("đã đọc checkbox")
-
-    for (var i = 0; i < checkbox.length; i++) {
-      if (checkbox[i].checked === true) {
-        result += Number(checkbox[i].value);
-      }
-    } console.log(result);
-    this.setState({day: result,}); let {day} = this.state; console.log("day = ", day);
-  }
   handleOk = () => {
     let { isEdit } = this.state;
     if (isEdit)
@@ -126,9 +123,18 @@ class Schedule extends Component {
       this.handleCreateOK();
   };
   handleCreateOK = () => { 
-    this.handleReadCheckBox();
-    let { led_data, pump_data, typ, count_LED, count_PUMP, start, long, date, day, note } = this.state;
-    let id; 
+    // handle checkbox
+    var checkbox = document.getElementsByName('day');
+    var result = 0;                                             
+
+    for (var i = 0; i < checkbox.length; i++) {
+      if (checkbox[i].checked === true) {
+        result += Number(checkbox[i].value);
+      }
+    }
+
+    let { led_data, pump_data, typ, count_LED, count_PUMP, start, long, date, note } = this.state;
+    let id;
     if (typ === 0) {
       id = "LED" + String(count_LED);
       this.setState({ count_LED: count_LED + 1 });
@@ -139,7 +145,7 @@ class Schedule extends Component {
     }
     let newSchedule = {
       id: id,
-      day: day,
+      day: result,
       date: date,
       start: start,
       long: long,
@@ -169,16 +175,77 @@ class Schedule extends Component {
     }, 2000);
   }
   handleEditOK = () => {
-    this.setState({
-      visible: false,
-    });
-  }
-  handleDelete = () => {
-    let { typ, deleteId, led_data, pump_data } = this.state;
+    // handle checkbox
+    var checkbox = document.getElementsByName('day');
+    var result = 0;                                             
+
+    for (var i = 0; i < checkbox.length; i++) {
+      if (checkbox[i].checked === true) {
+        result += Number(checkbox[i].value);
+      }
+    }
+
+    let { led_data, pump_data, typ, dayNow, id, start, long, date, note } = this.state;
     if (typ === 0) {
       if (led_data.length > 0) {
         for (let i = 0; i < led_data.length; i++) {
-          if (deleteId === led_data[i].id) {
+          if (id === led_data[i].id) {
+            led_data[i].start = start;
+            led_data[i].long = long;
+            led_data[i].day = result;
+            if (result)
+              led_data[i].date = "";
+            else if (date === "")
+              led_data[i].date = dayNow;
+            else
+              led_data[i].date = date;
+            led_data[i].note = note;
+            break;
+          }
+        }
+      }
+    }
+    else {
+      if (pump_data.length > 0) {
+        for (let i = 0; i < pump_data.length; i++) {
+          if (id === pump_data[i].id) {
+            pump_data[i].start = start;
+            pump_data[i].long = long;
+            pump_data[i].day = result;
+            if (result)
+              pump_data[i].date = "";
+            else if (date === "")
+              pump_data[i].date = dayNow;
+            else
+              pump_data[i].date = date;
+            pump_data[i].note = note;
+            break;
+          }
+        }
+      }
+    }
+    this.setState({
+      led_data,
+      pump_data,
+
+      loading: true,
+
+      start: "",
+      long: 0,
+      date: "",
+      day: 0b0,
+      note: "",
+    });
+    setTimeout(() => {
+      this.setState({ loading: false, visible: false, isEdit: false, });
+    }, 2000);
+  }
+  handleDelete = () => {
+    let { typ, id, led_data, pump_data } = this.state;
+    if (typ === 0) {
+      if (led_data.length > 0) {
+        for (let i = 0; i < led_data.length; i++) {
+          if (id === led_data[i].id) {
             led_data.splice(i, 1);
             break;
           }
@@ -189,7 +256,7 @@ class Schedule extends Component {
     else {
       if (pump_data.length > 0) {
         for (let i = 0; i < pump_data.length; i++) {
-          if (deleteId === pump_data[i].id) {
+          if (id === pump_data[i].id) {
             pump_data.splice(i, 1);
             break;
           }
@@ -205,25 +272,39 @@ class Schedule extends Component {
   handleCancel = () => {
     this.setState({ 
       visible: false,
+
+      defaultDate: "",
+      defaultDay: 0,
+      defaultLong: 1,
+      defaultNote: "",
     });
   };
   handleChangeStart = (value) => {
-    this.setState({ start: value });
+    this.setState({ 
+      start: value,
+      defaultStart: value,
+    });
   }
   handleChangeLong = (value) => {
-    if (value === null)
-      this.setState({ long: 1 });
-    else
-      this.setState({ long: value });
+    this.setState({ 
+      long: value,
+      defaultLong: value, 
+    });
   }
   handleChangeDate = (value) => {
-    this.setState({ date: value });
+    this.setState({ 
+      date: value,
+      defaultDate: value,
+    });
   }
   handleChangeNote = (value) => {
-    this.setState({ note: value });
+    this.setState({ 
+      note: value,
+      defaultNote: value,
+    });
   }
   showForm = () => {
-    let { typ, dayNow, defaultStart, defaultDate, defaultLong, defaultNote } = this.state;
+    let { typ, dayNow, defaultStart, defaultDate, defaultLong, defaultNote, defaultDay } = this.state;
     if (typ === 0) {
       return (
         <Form
@@ -231,6 +312,7 @@ class Schedule extends Component {
           dayNow={dayNow}
           defaultStart={defaultStart}
           defaultDate={defaultDate}
+          defaultDay={defaultDay}
           defaultLong={defaultLong}
           defaultNote={defaultNote}
 
@@ -247,6 +329,7 @@ class Schedule extends Component {
         dayNow={dayNow}
         defaultStart={defaultStart}
         defaultDate={defaultDate}
+        defaultDay={defaultDay}
         defaultLong={defaultLong}
         defaultNote={defaultNote}
 
@@ -273,7 +356,6 @@ class Schedule extends Component {
             led={led}
             status={led.status}
             showModal={this.showModal}
-
           />
           <br />
         </>
@@ -297,8 +379,6 @@ class Schedule extends Component {
             pump={pump}
             status={pump.status}
             showModal={this.showModal}
-
-
           />
           <br />
         </>
@@ -340,7 +420,7 @@ class Schedule extends Component {
                   </button>
                 </div>
               </div>
-
+              
               <div>
                 {this.renderLED()}
               </div>
