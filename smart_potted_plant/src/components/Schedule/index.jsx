@@ -22,6 +22,7 @@ class Schedule extends Component {
 
       visible: false,
       loading: false,
+      deleteLoading: false,
 
       isEdit: false,
       title: "",
@@ -250,7 +251,10 @@ class Schedule extends Component {
             break;
           }
         }
-        this.setState({led_data});
+        this.setState({
+          led_data,
+          deleteLoading: true,
+        });
       }
     }
     else {
@@ -261,13 +265,20 @@ class Schedule extends Component {
             break;
           }
         }
-        this.setState({pump_data});
+        this.setState({
+          pump_data,
+          deleteLoading: true,
+        });
       }
     }
-    this.setState({
-      visible: false,
-      isEdit: false,
-    });
+    setTimeout(() => {
+      this.setState({
+        visible: false,
+        isEdit: false,
+        deleteLoading: false,
+      });
+    }, 2000);
+    
   }
   handleCancel = () => {
     this.setState({ 
@@ -387,7 +398,7 @@ class Schedule extends Component {
     });
   }
   render = () => {
-    const { visible, title, loading, isEdit } = this.state;
+    const { visible, title, loading, deleteLoading, isEdit } = this.state;
 
     return (
       <>
@@ -465,7 +476,7 @@ class Schedule extends Component {
             isEdit && <Button
               key=""
               type="danger"
-              loading={loading}
+              loading={deleteLoading}
               onClick={() => this.handleDelete()}
             >
               Delete
