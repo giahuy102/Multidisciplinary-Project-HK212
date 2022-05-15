@@ -1,0 +1,30 @@
+.wrapper-container-forecast {
+    background-color: #0F2330;
+
+    height: 100%;
+}
+
+.forecast-form {
+    width: 60%;
+    margin-top: 30px;
+}
+
+.label-name {
+    color: white;
+    margin-bottom: 15px;
+    margin-top: 15px;
+
+    font-size: large;
+}
+
+.submit-forecast {
+    width: 30%;
+    margin-top: 40px;
+    background-color:  #123862 !important;
+    border: none !important;
+}
+
+.submit-forecast:hover {
+    background-color: #007bff !important;
+    border: none !important;
+}

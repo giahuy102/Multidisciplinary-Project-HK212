@@ -5,6 +5,9 @@ import SideNavBar from "../../components/SideNavBar/";
 import Home from "../../components/Home/";
 import Statistic from "../../components/Statistic";
 import ControlPanel from "../../components/control-panel";
+
+import Forecasting from "../../components/Forecasting"
+
 import "./style.css";
 import socket from "socket.io-client";
 
@@ -280,6 +283,7 @@ export default class Dashboard extends React.Component {
               />
             }
           />
+          <Route path="/forecasting" element={<Forecasting />} />
         </Routes>
       </div>
     </div>

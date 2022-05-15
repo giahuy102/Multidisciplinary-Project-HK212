@@ -3,6 +3,7 @@ import React, { useState } from "react";
 // ICONS
 import * as FaIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
+import * as BsIcons from "react-icons/bs";
 
 import { IconContext } from "react-icons";
 
@@ -53,11 +54,17 @@ export default function SideNavBar() {
                 <span>Control Panel</span>
               </Link>
             </li>
+            <li>
+              <Link to="/forecasting">
+                <BsIcons.BsLightbulbFill className="icon" />
+                <span>Forecasting</span>
+              </Link>
+            </li>
           </ul>
         </nav>
-      <div className="notify-wrapper">
+      {/* <div className="notify-wrapper">
 
-      </div>
+      </div> */}
       
       </div>
       
