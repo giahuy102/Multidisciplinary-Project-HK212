@@ -3,6 +3,10 @@ const bcrypt = require('bcrypt');
 const { registerValidation, loginValidation } = require('../services/auth/validation');
 const User = require('../model/User');
 const router = express.Router();
+
+const LEDDatabase = require('../model/LEDSchedule')
+const PUMPDatabase = require('../model/PUMPSchdule')
+
 const jwt = require('jsonwebtoken');
 const { username } = require('../services/mqtt/config');
 const axios = require("axios");
@@ -14,7 +18,7 @@ const { mapReduce } = require('../model/User');
 const client = subcriber.subcribe((err) => console.log(err));
 const Publisher = require("../services/mqtt/publisher").Publisher;
 const publisher = new Publisher(client);
-
+// mongodb+srv://dbMinhNhan:<password>@cluster0.xcwra.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
 router.post('/register', async(req, res) => {
     //validate before saving to database
     const { error } = registerValidation(req.body);
@@ -130,4 +134,66 @@ router.post("/change-device-status", async(req, res) => {
         return res.status(200).send();
     });
 });
+router.post("/create-led-schedule", async(req, res) => {
+    const led = new LEDDatabase({
+        start: req.body.start,
+        long: req.body.long,
+        day: req.body.day,
+        date: req.body.date,
+        note: req.body.note,
+    })
+    try {
+        await led.save();
+        res.status(201).send("Create new LED Schedule successfully");
+    }
+    catch (err) {
+        res.status(400).send(err);
+    } 
+});
+router.get("/get-all-led-schedule", async(req, res) => {
+    try {
+        let LEDSchedules = await LEDDatabase.find({});
+        res.status(200).send(LEDSchedules);
+    }
+    catch (err) {
+        res.status(400).send(err);
+    }
+});
+router.put("/update-led-schedule", async(req, res) => {
+    const _id = req.body["_id"];
+    const newStart = req.body["start"];
+    const newLong = req.body["long"];
+    const newDay = req.body["day"];
+    const newDate = req.body["date"];
+    const newNote = req.body["note"];
+
+    let foundLEDSchedule = LEDDatabase.findOne({_id: _id});
+
+    foundLEDSchedule['start'] = newStart;
+    foundLEDSchedule['long'] = newLong;
+    foundLEDSchedule['day'] = newDay;
+    foundLEDSchedule['date'] = newDate;
+    foundLEDSchedule['note'] = newNote;
+
+    try {
+        await foundLEDSchedule.save();
+        res.status(200).send(foundLEDSchedule);
+    }
+    catch (err) {
+        res.status(400).send("Cannot update LED Schedule");
+    }
+});
+router.delete("/del-led-schedule", async(req, res) => {
+    const _id = req.body['_id'];
+    
+    let foundLEDSchedule = LEDDatabase.findOne({_id: _id});
+
+    try {
+        await foundLEDSchedule.delete();
+        res.status(200).send("Delete LED Schedule successfully");
+    }
+    catch (err) {
+        res.status(400).send("Cannot delete LED Schedule");
+    }
+})
 module.exports = router;

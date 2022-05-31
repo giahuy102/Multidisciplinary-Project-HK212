@@ -8,6 +8,9 @@ import Form from "./schedule-components/form";
 
 import LEDDatabase from "./mock-data/LED-Data";
 import PUMPDatabase from "./mock-data/PUMP-data";
+// const mongoose = require('mongoose');
+// const LEDDatabase = require("../../../../server/model/LEDSchedule");
+// const PUMPDatabase = require("../../../../server/model/PUMPSchdule")
 
 class Schedule extends Component {
   constructor(props) {
