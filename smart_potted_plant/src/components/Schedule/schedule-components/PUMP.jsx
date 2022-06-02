@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 
+import axios from "axios";
+const API_URL = "http://localhost:3001/api/user/";
+
 class PUMP extends Component {
 	constructor(props) {
 		super(props);
@@ -9,19 +12,30 @@ class PUMP extends Component {
 			status: this.props.status,
 		}
 	}
-	handleSwitch = (status) => {
+	handleSwitch = async (status) => {
 		if (status === 1) {
-			this.props.pump.status = 0;
+			// this.props.pump.status = 0;
+			const newStatus = {
+				id: this.props.pump._id,
+				status: 0
+			}
+			await axios.put(API_URL + "update-pump-status", newStatus);
 			this.setState({
 				status: 0,
 			});
 		}
 		else {
-			this.props.pump.status = 1;
+			// this.props.pump.status = 1;
+			const newStatus = {
+				id: this.props.pump._id,
+				status: 1
+			}
+			await axios.put(API_URL + "update-pump-status", newStatus);
 			this.setState({
 				status: 1,
 			})
 		}
+		await this.props.pullData(1);
 	}
 	switches = (status) => {
 		if (status) {

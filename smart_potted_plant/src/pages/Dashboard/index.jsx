@@ -75,8 +75,8 @@ export default class Dashboard extends React.Component {
       <SideNavBar />
       <div className="col">
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/statistic" element={<Statistic />} />
+          <Route path="/" element={<Home />} />     
+          <Route path="/statistic" element={<Statistic />} />          
           <Route
             path="/control-panel"
             element={

@@ -50,7 +50,7 @@ class Form extends Component {
 					/>
 					<br /><br />
 
-					<label for="long"><i>Time of {typ}:</i></label> &nbsp;
+					<label htmlFor="long"><i>Time of {typ}:</i></label> &nbsp;
 					<input
 						type="number" id="long" name="long"
 						min="1" value={defaultLong}

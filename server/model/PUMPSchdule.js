@@ -8,7 +8,8 @@ const PUMPSchema = new mongoose.Schema({
     },
     day: Number,
     date: String,
-    note: String
+    note: String,
+    status: Number
 });
 
 module.exports = mongoose.model('PUMPDatabase', PUMPSchema);

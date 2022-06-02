@@ -6,6 +6,8 @@ const dbConnection = require('./services/database/connection')
 const bodyParser = require("body-parser")
 dotenv.config(); //load config from .env to process.env
 
+require('./services/schedule/schedule')
+
 const cors = require('cors') //cross origin
 app.use(
     cors({

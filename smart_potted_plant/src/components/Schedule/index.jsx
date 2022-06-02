@@ -12,16 +12,25 @@ import PUMPDatabase from "./mock-data/PUMP-data";
 // const LEDDatabase = require("../../../../server/model/LEDSchedule");
 // const PUMPDatabase = require("../../../../server/model/PUMPSchdule")
 
+import axios from 'axios';
+const API_URL = "http://localhost:3001/api/user/";
+
 class Schedule extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      led_data: LEDDatabase,
-      pump_data: PUMPDatabase,
+      led_data: [],
+      pump_data: [],
 
-      count_LED: 0,
-      connt_PUMP: 0,
+      showLEDSchedule: false,
+      showPUMPSchedule: false,
+
+      // led_data: LEDDatabase,
+      // pump_data: PUMPDatabase,
+
+      // count_LED: 0,
+      // connt_PUMP: 0,
 
       visible: false,
       loading: false,
@@ -48,6 +57,24 @@ class Schedule extends Component {
 
     }
   }
+  showSchedule = (typ, status) => {
+    if (typ === 0) {
+      this.setState({
+        showLEDSchedule: !status,
+      });
+      if (!status) {
+        this.pullData(0);
+      }
+    }
+    else if (typ === 1) {
+      this.setState({
+        showPUMPSchedule: !status,
+      });
+      if (!status) {
+        this.pullData(1);
+      }
+    }
+  }
   showModal = (typ, mode, device) => {        // typ:   LED - PUMP
     let d = new Date();                       // mode:  create - edit
     let HH = d.getHours() >= 10 ? String(d.getHours()) : "0" + String(d.getHours()),
@@ -67,8 +94,8 @@ class Schedule extends Component {
     if (mode === 1) {                           // mode: edit
       this.setState({
         isEdit: true,
-        id: device.id,
-        
+        id: device._id,
+
         defaultStart: device.start,
         defaultDate: device.date,
         defaultDay: device.day,
@@ -100,7 +127,7 @@ class Schedule extends Component {
         defaultDay: 0,
         defaultLong: 1,
         defaultNote: "",
-        
+
         start: _time,
         date: _day,
         day: 0,
@@ -126,10 +153,10 @@ class Schedule extends Component {
     else
       this.handleCreateOK();
   };
-  handleCreateOK = () => { 
+  handleCreateOK = async () => {
     // handle checkbox
     var checkbox = document.getElementsByName('day');
-    var result = 0;                                             
+    var result = 0;
 
     for (var i = 0; i < checkbox.length; i++) {
       if (checkbox[i].checked === true) {
@@ -137,18 +164,18 @@ class Schedule extends Component {
       }
     }
 
-    let { led_data, pump_data, typ, count_LED, count_PUMP, start, long, date, note } = this.state;
-    let id;
-    if (typ === 0) {
-      id = "LED" + String(count_LED);
-      this.setState({ count_LED: count_LED + 1 });
-    }
-    else {
-      id = "PUMP" + String(count_PUMP);
-      this.setState({ count_PUMPL: count_PUMP + 1 });
-    }
+    let { led_data, pump_data, typ, start, long, date, note } = this.state;
+    // let id;
+    // if (typ === 0) {
+    //   id = "LED" + String(count_LED);
+    //   this.setState({ count_LED: count_LED + 1 });
+    // }
+    // else {
+    //   id = "PUMP" + String(count_PUMP);
+    //   this.setState({ count_PUMPL: count_PUMP + 1 });
+    // }
     let newSchedule = {
-      id: id,
+      // id: id,
       day: result,
       date: date,
       start: start,
@@ -157,14 +184,17 @@ class Schedule extends Component {
       status: 1
     };
     if (typ === 0) {
-      led_data.push(newSchedule);
+      //led_data.push(newSchedule);
+      await axios.post(API_URL + "create-led-schedule", newSchedule);
+      this.pullData(0);
     }
     else {
-      pump_data.push(newSchedule);
+      await axios.post(API_URL + "create-pump-schedule", newSchedule);
+      this.pullData(1);
     }
     this.setState({
-      led_data,
-      pump_data,
+      // led_data,
+      // pump_data,
 
       loading: true,
 
@@ -178,59 +208,80 @@ class Schedule extends Component {
       this.setState({ loading: false, visible: false });
     }, 2000);
   }
-  handleEditOK = () => {
+  handleEditOK = async () => {
     // handle checkbox
     var checkbox = document.getElementsByName('day');
-    var result = 0;                                             
+    var result = 0;
 
     for (var i = 0; i < checkbox.length; i++) {
       if (checkbox[i].checked === true) {
-        result += Number(checkbox[i].value);
+        result += Number(checkbox[i].value); console.log("Day of week: ", result);
       }
     }
 
     let { led_data, pump_data, typ, dayNow, id, start, long, date, note } = this.state;
+    
+    let _date;
+    if (result)     
+      _date = "";
+    else if (date === "") 
+      _date = dayNow;
+    else  
+      _date = date;
+
+    const newSchedule = {
+      id: id,
+      start: start, 
+      long: long,
+      day: result,
+      date: _date,
+      note: note
+    }
     if (typ === 0) {
       if (led_data.length > 0) {
-        for (let i = 0; i < led_data.length; i++) {
-          if (id === led_data[i].id) {
-            led_data[i].start = start;
-            led_data[i].long = long;
-            led_data[i].day = result;
-            if (result)
-              led_data[i].date = "";
-            else if (date === "")
-              led_data[i].date = dayNow;
-            else
-              led_data[i].date = date;
-            led_data[i].note = note;
-            break;
-          }
-        }
+        await axios.put(API_URL + "update-led-schedule", newSchedule);
+        this.pullData(0);
+        // for (let i = 0; i < led_data.length; i++) {
+        //   if (id === led_data[i].id) {
+        //     led_data[i].start = start;
+        //     led_data[i].long = long;
+        //     led_data[i].day = result;
+        //     if (result)
+        //       led_data[i].date = "";
+        //     else if (date === "")
+        //       led_data[i].date = dayNow;
+        //     else
+        //       led_data[i].date = date;
+        //     led_data[i].note = note;
+        //     break;
+        //   }
+        // }
       }
     }
     else {
       if (pump_data.length > 0) {
-        for (let i = 0; i < pump_data.length; i++) {
-          if (id === pump_data[i].id) {
-            pump_data[i].start = start;
-            pump_data[i].long = long;
-            pump_data[i].day = result;
-            if (result)
-              pump_data[i].date = "";
-            else if (date === "")
-              pump_data[i].date = dayNow;
-            else
-              pump_data[i].date = date;
-            pump_data[i].note = note;
-            break;
-          }
-        }
+        await axios.put(API_URL + "update-pump-schedule", newSchedule);
+        this.pullData(1);
+        // for (let i = 0; i < pump_data.length; i++) {
+        //   if (id === pump_data[i].id) {
+        //     pump_data[i].start = start;
+        //     pump_data[i].long = long;
+        //     pump_data[i].day = result;
+        //     if (result)
+        //       pump_data[i].date = "";
+        //     else if (date === "")
+        //       pump_data[i].date = dayNow;
+        //     else
+        //       pump_data[i].date = date;
+        //     pump_data[i].note = note;
+        //     break;
+        //   }
+        // }
       }
     }
     this.setState({
-      led_data,
-      pump_data,
+      // led_data,
+      // pump_data,
 
       loading: true,
 
@@ -244,32 +295,37 @@ class Schedule extends Component {
       this.setState({ loading: false, visible: false, isEdit: false, });
     }, 2000);
   }
-  handleDelete = () => {
+  handleDelete = async () => {
     let { typ, id, led_data, pump_data } = this.state;
+    const delSchedule = {id: id}; console.log("delSchedule: ", delSchedule);
     if (typ === 0) {
       if (led_data.length > 0) {
-        for (let i = 0; i < led_data.length; i++) {
-          if (id === led_data[i].id) {
-            led_data.splice(i, 1);
-            break;
-          }
-        }
+        await axios.post(API_URL + "del-led-schedule", delSchedule);
+        // for (let i = 0; i < led_data.length; i++) {
+        //   if (id === led_data[i].id) {
+        //     led_data.splice(i, 1);
+        //     break;
+        //   }
+        // }
+        await this.pullData(0);
         this.setState({
-          led_data,
+          // led_data,
           deleteLoading: true,
         });
       }
     }
     else {
       if (pump_data.length > 0) {
-        for (let i = 0; i < pump_data.length; i++) {
-          if (id === pump_data[i].id) {
-            pump_data.splice(i, 1);
-            break;
-          }
-        }
+        await axios.post(API_URL + "del-pump-schedule", delSchedule);
+        // for (let i = 0; i < pump_data.length; i++) {
+        //   if (id === pump_data[i].id) {
+        //     pump_data.splice(i, 1);
+        //     break;
+        //   }
+        // }
+        await this.pullData(1);
         this.setState({
-          pump_data,
+          // pump_data,
           deleteLoading: true,
         });
       }
@@ -281,10 +337,10 @@ class Schedule extends Component {
         deleteLoading: false,
       });
     }, 2000);
-    
+
   }
   handleCancel = () => {
-    this.setState({ 
+    this.setState({
       visible: false,
 
       defaultDate: "",
@@ -294,25 +350,25 @@ class Schedule extends Component {
     });
   };
   handleChangeStart = (value) => {
-    this.setState({ 
+    this.setState({
       start: value,
       defaultStart: value,
     });
   }
   handleChangeLong = (value) => {
-    this.setState({ 
+    this.setState({
       long: value,
-      defaultLong: value, 
+      defaultLong: value,
     });
   }
   handleChangeDate = (value) => {
-    this.setState({ 
+    this.setState({
       date: value,
       defaultDate: value,
     });
   }
   handleChangeNote = (value) => {
-    this.setState({ 
+    this.setState({
       note: value,
       defaultNote: value,
     });
@@ -366,10 +422,11 @@ class Schedule extends Component {
       return (
         <>
           <LED
-            id={led.id}
+            id={led._id}
             led={led}
             status={led.status}
             showModal={this.showModal}
+            pullData={this.pullData}
           />
           <br />
         </>
@@ -389,10 +446,11 @@ class Schedule extends Component {
       return (
         <>
           <PUMP
-            id={pump.id}
+            id={pump._id}
             pump={pump}
             status={pump.status}
             showModal={this.showModal}
+            pullData={this.pullData}
           />
           <br />
         </>
@@ -400,9 +458,38 @@ class Schedule extends Component {
       );
     });
   }
+  pullData = async (typ) => {
+    if (typ === 0) {
+      let response = await axios({
+        method: "get",
+        data: {},
+        url: API_URL + "get-all-led-schedule",
+        withCredentials: true,
+      }); console.log("Respone pull data: ", response.data);
+      await this.setState({
+        led_data: response.data,
+      });
+    }
+    else if (typ === 1) {
+      let response = await axios({
+        method: "get",
+        data: {},
+        url: API_URL + "get-all-pump-schedule",
+        withCredentials: true,
+      }); console.log("Respone pull data: ", response.data);
+      await this.setState({
+        pump_data: response.data,
+      });
+    }
+  }
   render = () => {
-    const { visible, title, loading, deleteLoading, isEdit } = this.state;
+    const { led_data, pump_data, visible, title, loading, deleteLoading, isEdit, showLEDSchedule, showPUMPSchedule } = this.state;
 
+    //let led_data = axios.get(API_URL + "get-all-led-schedule").Object.data; console.log("Get LED data --> ", led_data);
+    //this.pullData();
+
+    console.log("led-data: ", led_data);
+    console.log("pump-data: ", pump_data);
     return (
       <>
         <div className="background container-fluid p-0">
@@ -417,7 +504,15 @@ class Schedule extends Component {
             <div className="col p-5">
               <div className="row justify-content-around">
                 <div className="col-10">
-                  <p style={{ fontSize: "20px", fontWeight: "bold" }}>LED Schedule</p>
+                  <button
+                    type="button"
+                    className="btn btn-success"
+                    style={{ fontSize: "20px", fontWeight: "bold", border: "solid 2px" }}
+                    onClick={() => this.showSchedule(0, showLEDSchedule)}
+                  >
+                    LED Schedule
+                  </button>
+                  {/* <p style={{ fontSize: "20px", fontWeight: "bold" }}>LED Schedule</p> */}
                 </div>
                 <div className="col-2">
                   <button
@@ -434,16 +529,24 @@ class Schedule extends Component {
                   </button>
                 </div>
               </div>
-              
+              <br></br>
               <div>
-                {this.renderLED()}
+                {showLEDSchedule && this.renderLED()}
               </div>
             </div>
 
             <div className="col p-5">
               <div className="row justify-content-around">
                 <div className="col-10">
-                  <p style={{ fontSize: "20px", fontWeight: "bold" }}>PUMP Schedule</p>
+                  <button
+                    type="button"
+                    className="btn btn-success"
+                    style={{ fontSize: "20px", fontWeight: "bold", border: "solid 2px" }}
+                    onClick={() => this.showSchedule(1, showPUMPSchedule)}
+                  >
+                    PUMP Schedule
+                  </button>
+                  {/* <p style={{ fontSize: "20px", fontWeight: "bold" }}>PUMP Schedule</p> */}
                 </div>
                 <div className="col-2">
                   <button
@@ -460,9 +563,9 @@ class Schedule extends Component {
                   </button>
                 </div>
               </div>
-
+              <br/>
               <div>
-                {this.renderPUMP()}
+                {showPUMPSchedule && this.renderPUMP()}
               </div>
             </div>
           </div>

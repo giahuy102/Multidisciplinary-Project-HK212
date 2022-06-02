@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 
+import axios from "axios";
+const API_URL = "http://localhost:3001/api/user/";
+
 class LED extends Component {
 	constructor(props) {
 		super(props);
@@ -9,19 +12,32 @@ class LED extends Component {
 			status: this.props.status,
 		}
 	}
-	handleSwitch = (status) => {
+	handleSwitch = async (status) => {
 		if (status === 1) {
-			this.props.led.status = 0;
+			// this.props.led.status = 0;
+			const newStatus = {
+				id: this.props.led._id,
+				led: this.props.led,
+				status: 0
+			}
+			await axios.put(API_URL + "update-led-status", newStatus);
 			this.setState({
 				status: 0,
 			});
 		}
 		else {
-			this.props.led.status = 1;
+			// this.props.led.status = 1;
+			const newStatus = {
+				id: this.props.led._id,
+				led: this.props.led,
+				status: 1
+			}
+			await axios.put(API_URL + "update-led-status", newStatus);
 			this.setState({
 				status: 1,
 			})
 		}
+		await this.props.pullData(0);
 	}
 	switches = (status) => {
 		if (status) {
