@@ -13,7 +13,7 @@ const client = subcriber.subcribe((err) => console.log(err));
 const Publisher = require("../services/mqtt/publisher").Publisher;
 const publisher = new Publisher(client);
 
-const auth = require('../middleware/verifyToken');
+// const auth = require('../middleware/verifyToken');
 
 
 router.post('/register', async(req, res) => {
@@ -141,11 +141,11 @@ router.post("/change-device-status", async(req, res) => {
 });
 
 
-router.post('/get_user', auth, async (req, res) => {
-    const user = await User.findOne({ _id: req.user.user_id });
-    // console.log(user);
-    res.status(201).send(user.username);
-});
+// router.post('/get_user', auth, async (req, res) => {
+//     const user = await User.findOne({ _id: req.user.user_id });
+//     // console.log(user);
+//     res.status(201).send(user.username);
+// });
 
 
 module.exports = router;
