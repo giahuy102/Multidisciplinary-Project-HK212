@@ -19,6 +19,17 @@ const AuthService = function() {
             password
         })
     }
+
+
+    // this.getUser = async(token) => {
+    //     return axios.post(API_URL + 'get_user', {
+    //         token
+    //     })
+    // }
+
+    this.getUser = () => {
+        return localStorage.getItem('user');
+    }
 }
 
 export default new AuthService();

@@ -12,6 +12,10 @@ const subcriber = require("../services/mqtt/subcriber");
 const client = subcriber.subcribe((err) => console.log(err));
 const Publisher = require("../services/mqtt/publisher").Publisher;
 const publisher = new Publisher(client);
+
+const auth = require('../middleware/verifyToken');
+
+
 router.post('/register', async(req, res) => {
     //validate before saving to database
     const { error } = registerValidation(req.body);
@@ -58,11 +62,15 @@ router.post('/login', async(req, res) => {
 
     const validPassword = await bcrypt.compare(req.body.password, user.password);
 
+    const email = user.email;    
+
+
     if (validPassword) {
-        const token = jwt.sign({ user_id: user._id, },
-            process.env.SECRET_TOKEN, {
-                expiresIn: "2h",
-            }
+        const token = jwt.sign({ user_id: user._id, email},
+            process.env.SECRET_TOKEN, 
+            // {
+            //     expiresIn: "2h",
+            // }
         );
 
         // user.accessToken = token;
@@ -77,6 +85,10 @@ router.post('/login', async(req, res) => {
     }
 });
 router.get("/get-all-data", async(req, res) => {
+
+    
+
+
     // Check jwt
     let maxRecordGet = 15;
     let temperature = (
@@ -127,4 +139,13 @@ router.post("/change-device-status", async(req, res) => {
         return res.status(200).send();
     });
 });
+
+
+router.post('/get_user', auth, async (req, res) => {
+    const user = await User.findOne({ _id: req.user.user_id });
+    // console.log(user);
+    res.status(201).send(user.username);
+});
+
+
 module.exports = router;

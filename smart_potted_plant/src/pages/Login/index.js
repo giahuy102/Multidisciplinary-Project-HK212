@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import './style.css'
 
 import AuthService from '../../services/AuthService';
@@ -19,7 +19,8 @@ function Login() {
             if (response.data.accessToken) {
                 localStorage.setItem("user", JSON.stringify(response.data));
             }
-            navigate('/');
+            // navigate('/', {replace: true});
+            window.location.href = '/';
             console.log(response.data);
         }).catch(err => { 
             // console.log(4);
@@ -29,20 +30,21 @@ function Login() {
         })
     }
 
+
     return (
         <div className="wrapper-container">
             <form className="form">
                 <div className="mb-3">
-                    <label for='email' className="form-label">Email address</label>
+                    <label htmlFor='email' className="form-label">Email address</label>
                     <input className="form-control" id="email" type='email' onChange={ (event) => setEmail(event.target.value) }></input>
                 </div>
 
                 <div className="mb-3">
-                    <label for='password' className="form-label">Password</label>
+                    <label htmlFor='password' className="form-label">Password</label>
                     <input className="form-control" id="password" type='password' onChange={ (event) => setPassword(event.target.value) }></input>
                 </div>
                 <div style={{marginBottom: '20px'}}>   
-                    <small id="register-navigate" class="form-text text-muted">
+                    <small id="register-navigate" className="form-text text-muted">
                         Don't have an account.   
                         <a href="#" onClick={ (event) => navigate('/register') } > Register here</a> 
                     </small>

@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import axios from "axios";
 import SideNavBar from "../../components/SideNavBar/";
 import Home from "../../components/Home/";
@@ -12,7 +12,13 @@ import "./style.css";
 import socket from "socket.io-client";
 
 import NotifyMe from '../../components/react-notification-timeline';
+import { AiOutlineConsoleSql } from "react-icons/ai";
 // import NotifyMe from 'react-notification-timeline';
+
+import AuthService from '../../services/AuthService';
+// import JWTStorage from '../../services/JWTStorage';
+import { loadToken } from '../../services/JWTStorage'
+
 
 const API_URL = "http://localhost:3001/api/user/";
 
@@ -34,6 +40,7 @@ export default class Dashboard extends React.Component {
       humiAir: "0",
       light: "0",
 
+      user: AuthService.getUser(),
 
       notificationData:  [
           // {
@@ -106,10 +113,137 @@ export default class Dashboard extends React.Component {
       url: API_URL + "get-all-data",
     });
 
+    // console.log(response.data);
+
     // console.log(response.data.temperature[0].value);
     await this.setState({
       notificationData: []
     })
+
+
+
+
+
+
+
+
+
+    response.data.humiAir = [
+      {
+        feed_key: 'bbc-led',
+        value: 400
+      },
+      {
+        feed_key: 'bbc-led',
+        value: 200
+      },
+      {
+        feed_key: 'bbc-led',
+        value: 200
+      },
+      {
+        feed_key: 'bbc-led',
+        value: 200
+      },
+      {
+        feed_key: 'bbc-led',
+        value: 200
+      },
+      {
+        feed_key: 'bbc-led',
+        value: 200
+      }
+    ]
+
+    response.data.temperature = [
+      {
+        feed_key: 'bbc-led',
+        value: 400
+      },
+      {
+        feed_key: 'bbc-led',
+        value: 200
+      },
+      {
+        feed_key: 'bbc-led',
+        value: 200
+      },
+      {
+        feed_key: 'bbc-led',
+        value: 200
+      },
+      {
+        feed_key: 'bbc-led',
+        value: 200
+      },
+      {
+        feed_key: 'bbc-led',
+        value: 200
+      }
+    ]
+
+    response.data.humiSoil = [
+      {
+        feed_key: 'bbc-led',
+        value: 400
+      },
+      {
+        feed_key: 'bbc-led',
+        value: 200
+      },
+      {
+        feed_key: 'bbc-led',
+        value: 200
+      },
+      {
+        feed_key: 'bbc-led',
+        value: 200
+      },
+      {
+        feed_key: 'bbc-led',
+        value: 200
+      },
+      {
+        feed_key: 'bbc-led',
+        value: 200
+      }
+    ]
+
+    response.data.light = [
+      {
+        feed_key: 'bbc-led',
+        value: 400
+      },
+      {
+        feed_key: 'bbc-led',
+        value: 200
+      },
+      {
+        feed_key: 'bbc-led',
+        value: 200
+      },
+      {
+        feed_key: 'bbc-led',
+        value: 200
+      },
+      {
+        feed_key: 'bbc-led',
+        value: 200
+      },
+      {
+        feed_key: 'bbc-led',
+        value: 200
+      }
+    ]
+
+    console.log(response.data)
+
+
+
+
+
+
+
 
     this.checkAndPushMessage("Temperature", response.data.temperature[0].value, this.threshold.temperature);
     this.checkAndPushMessage("Air humidity", response.data.humiAir[0].value, this.threshold.humiAir);
@@ -137,13 +271,44 @@ export default class Dashboard extends React.Component {
     });
   };
 
+
+  // checkJwt = async() => {
+  //   loadToken().then(value => {
+  //     if (value) {
+  //       AuthService.getUser(value)
+  //       .then(response => {
+
+  //         console.log(response.data);
+  //         this.setState({
+  //           isLogin: true,
+  //           username: response.data
+  //         })
+
+  //         // console.log(this.state.isLogin)
+  //         // return response.data;
+
+  //       })
+  //       .catch(err => {
+  //         console.log(err);
+  //         this.setState({
+  //           isLogin: false
+  //         })
+  //       })
+  //     }
+  //   })
+  // }
   
 
 
   componentDidMount = async () => {
+
+    
     await this.pullData();
+
+
     this.io = socket.connect("http://localhost:3001/");
     this.io.on("new_data", (message) => {
+
       let feedID = message.feedID;
       let data = message.data;
       console.log(data)
@@ -212,6 +377,9 @@ export default class Dashboard extends React.Component {
   };
   changeDeviceStatus = async (device) => {
     let deviceStatus = undefined;
+
+    console.log(device)
+
     if (device == "led") {
       deviceStatus = this.state.ledStatus == "0" ? "1" : "0";
       this.setState({ ledStatus: deviceStatus });
@@ -229,9 +397,17 @@ export default class Dashboard extends React.Component {
   
 
 
-  render = () => (
+  render = () => {
+  // <>
+  // <Navigate replace to="/login" />
+  // !this.state.username ? <Navigate to="/login" replace /> :
+  // console.log(AuthService.getUser())
+  return (
     <div className="d-flex">
+      {/* <Navigate replace to="/login" /> */}
+      {/* {!this.state.username && <Navigate to="/login" replace />} */}
       <SideNavBar />
+
       <div className="col">
         <div className="top-nav-wrap">
           <div className="top-nav" style={{height: 60}}>
@@ -255,7 +431,9 @@ export default class Dashboard extends React.Component {
         </div>
 
         <Routes>
-          <Route path="/" element={<Home />} />
+          {/* <Route path="/" element={<Home />} />  */}
+          {/* <Route path="/" element={<Navigate to="/control-panel" replace />} /> */}
+          <Route path="*" element={<Navigate to="/control-panel" replace />} />
           <Route
             path="/statistic"
             element={
@@ -283,9 +461,27 @@ export default class Dashboard extends React.Component {
               />
             }
           />
-          <Route path="/forecasting" element={<Forecasting />} />
+          <Route 
+            path="/forecasting" 
+            element={
+              <Forecasting 
+                ledStatus={this.state.ledStatusData}
+                pumpStatus={this.state.pumpStatusData}
+                temperature={this.state.temperatureData}
+                humiAir={this.state.humiAirData}
+                humiSoil={this.state.humiSoilData}
+                light={this.state.lightData}
+              
+              />
+            
+            } 
+            
+          />
         </Routes>
       </div>
     </div>
+  
+  // </>
   );
+  };
 }

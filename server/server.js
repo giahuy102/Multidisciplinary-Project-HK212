@@ -25,6 +25,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 const apiRouter = require('./routes/router');
 app.use('/api/user', apiRouter);
 
+
+
+
 // const verifyToken = require('./middleware/verifyToken');
 // app.get('/', verifyToken, (req, res) => {
 //     res.send('success');
@@ -42,9 +45,16 @@ app.use(function(err, req, res, next) {
     res.send("URL Not Found!");
 });
 
+
+
+
 const server = app.listen(process.env.PORT, () => console.log(`Server is running at http://localhost:${process.env.PORT}`));
 global.io = require("socket.io")(server, { cors: { origin: "*" } });
+
+
+
 global.io.on("connection", socket => {
+    
     console.log("Client server socket connected, id: ", socket.id);
     socket.on("disconnect", () => { console.log("Client server socket disconnected!"); })
 });

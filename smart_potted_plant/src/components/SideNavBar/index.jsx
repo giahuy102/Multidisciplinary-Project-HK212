@@ -36,12 +36,12 @@ export default function SideNavBar() {
             <FaIcons.FaBars className="fabar-icon" />
           </Link>
           <ul>
-            <li>
+            {/* <li>
               <Link to="/">
                 <AiIcons.AiFillHome className="icon" />
                 <span>Home</span>
               </Link>
-            </li>
+            </li> */}
             <li>
               <Link to="/statistic">
                 <AiIcons.AiOutlineBarChart className="icon" />
