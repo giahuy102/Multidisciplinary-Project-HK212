@@ -1,5 +1,10 @@
 const schedule = require('node-schedule');
 
+// const subcriber = require("../mqtt/subcriber");
+// const client = subcriber.subcribe((err) => console.log(err));
+// const Publisher = require("../mqtt/publisher").Publisher;
+// const publisher = new Publisher(client);
+
 /*
     * * * * * * *
     | | | | | | |_____________  year (optional)
@@ -12,7 +17,7 @@ const schedule = require('node-schedule');
 */
 
 /* 
-    divice {
+    device {
         _id: ObjectId('STRING'),
         start:  'hh:mm',
         long:   number,
@@ -94,33 +99,44 @@ const computeCronExpr = (start, long, day, date) => {
 }
 
 
-const createSchedule = (typ, divice) => {
-    let cronExpr = computeCronExpr(divice.start, divice.long, divice.day, divice.date);
+const createSchedule = (typ, device, publisher) => {
+    let cronExpr = computeCronExpr(device.start, device.long, device.day, device.date);
     console.log("Cron start -> ", cronExpr.cronExprON);
     console.log("Cron end -> ", cronExpr.cronExprOFF);
-    const nameON = divice._id.toString() + "ON";
-    const nameOFF = divice._id.toString() + "OFF";
+    const nameON = device._id.toString() + "ON";
+    const nameOFF = device._id.toString() + "OFF";
+    let feedID = undefined;
+    if (typ === 0) {
+        feedID = "dat_huynh/feeds/bbc-led";
+    }
+    else {
+        feedID = "dat_huynh/feeds/bbc-pump";
+    }
     schedule.scheduleJob(nameON, cronExpr.cronExprON, () => {
         /* 
-            1. Check the status of Led/Pump divice
-            2. If status = TRUE -> Quit
-            3. Call change divice status function to ON
+            Change device status into ON
         */
         console.log("Run schedule...");
+        publisher.publish(feedID, 1, (err) => {
+            if (err) return console.log("Cannot run schedule!");
+            return console.log("Run schedule successfully!");
+        });
     });
     schedule.scheduleJob(nameOFF, cronExpr.cronExprOFF, () => {
         /* 
-            1. Check the status of Led/Pump divice
-            2. If status = FALSE -> Quit
-            3. Call change divice status function to OFF
+            Change device status into OFF
         */
         console.log("End schedule...");
-    })
+        publisher.publish(feedID, 0, (err) => {
+            if (err) return console.log("Cannot end schedule!");
+            return console.log("End schedule successfully!");
+        });
+    });
 }
 
-const deleteSchedule = (typ, divice) => {
-    const nameON = divice._id.toString() + "ON";
-    const nameOFF = divice._id.toString() + "OFF";
+const deleteSchedule = (typ, device) => {
+    const nameON = device._id.toString() + "ON";
+    const nameOFF = device._id.toString() + "OFF";
     schedule.cancelJob(nameON);
     schedule.cancelJob(nameOFF);
 }

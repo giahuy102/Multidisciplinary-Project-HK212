@@ -157,7 +157,7 @@ router.post("/create-led-schedule", async (req, res) => {
     });
     try {
         const createLED = await led.save();
-        Schedule.createSchedule(0, createLED);                          // Create new schedule 
+        Schedule.createSchedule(0, createLED, publisher);                          // Create new schedule 
         res.status(201).send("Create new LED Schedule successfully");
     }
     catch (err) {
@@ -204,7 +204,7 @@ router.put("/update-led-schedule", async (req, res) => {
         await foundLEDSchedule.save();
         if (foundLEDSchedule.status === 1) {
             Schedule.deleteSchedule(0, foundLEDSchedule);
-            Schedule.createSchedule(0, foundLEDSchedule);
+            Schedule.createSchedule(0, foundLEDSchedule, publisher);
         }
         res.status(200).send(foundLEDSchedule);
     }
@@ -222,7 +222,7 @@ router.put("/update-led-status", async (req, res) => {
     try {
         await foundLEDSchedule.save();
         if (newStatus) {
-            Schedule.createSchedule(0, foundLEDSchedule);
+            Schedule.createSchedule(0, foundLEDSchedule, publisher);
         }
         else {
             Schedule.deleteSchedule(0, foundLEDSchedule);
@@ -268,7 +268,7 @@ router.post("/create-pump-schedule", async (req, res) => {
     });
     try {
         const createPUMP = await pump.save();
-        Schedule.createSchedule(1, createPUMP);                          // Create new schedule 
+        Schedule.createSchedule(1, createPUMP, publisher);                          // Create new schedule 
         res.status(201).send("Create new PUMP Schedule successfully");
     }
     catch (err) {
@@ -314,7 +314,7 @@ router.put("/update-pump-schedule", async (req, res) => {
         await foundPUMPSchedule.save();
         if (foundPUMPSchedule.status === 1) {
             Schedule.deleteSchedule(0, foundPUMPSchedule);
-            Schedule.createSchedule(0, foundPUMPSchedule);
+            Schedule.createSchedule(0, foundPUMPSchedule, publisher);
         }
         res.status(200).send(foundPUMPSchedule);
     }
@@ -332,7 +332,7 @@ router.put("/update-pump-status", async (req, res) => {
     try {
         await foundPUMPSchedule.save();
         if (newStatus) {
-            Schedule.createSchedule(0, foundPUMPSchedule);
+            Schedule.createSchedule(0, foundPUMPSchedule, publisher);
         }
         else {
             Schedule.deleteSchedule(0, foundPUMPSchedule);

@@ -91,7 +91,15 @@ export default class Dashboard extends React.Component {
               />
             }
           />
-          <Route path="/schedule" element={<Schedule />} />
+          <Route 
+            path="/schedule" 
+            element={
+              <Schedule 
+                ledStatus={this.state.ledStatus}
+                pumpStatus={this.state.pumpStatus}
+              />
+            } 
+          />
         </Routes>
       </div>
     </div>
