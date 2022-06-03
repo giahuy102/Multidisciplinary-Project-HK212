@@ -19,6 +19,11 @@ import Statistic from '../Statistic'
 export default function SideNavBar() {
   const [active, setActive] = useState(true);
 
+  const logout = () => {
+
+    localStorage.removeItem('user');
+    window.location.href = '/login';
+  }
 
 
 
@@ -43,15 +48,21 @@ export default function SideNavBar() {
               </Link>
             </li> */}
             <li>
+              <Link to="/control-panel">
+                <AiIcons.AiOutlineTool className="icon" />
+                <span>Control Panel</span>
+              </Link>
+            </li>
+            <li>
               <Link to="/statistic">
                 <AiIcons.AiOutlineBarChart className="icon" />
                 <span>Statistic</span>
               </Link>
             </li>
             <li>
-              <Link to="/control-panel">
-                <AiIcons.AiOutlineTool className="icon" />
-                <span>Control Panel</span>
+              <Link to="/schedule">
+                <AiIcons.AiOutlineCalendar className="icon" />
+                <span>Schedule</span>
               </Link>
             </li>
             <li>
@@ -61,11 +72,25 @@ export default function SideNavBar() {
               </Link>
             </li>
           </ul>
+
+          <button className='btn btn-primary'
+            onClick={logout}
+            style={
+              {
+                width: '100%',
+                backgroundColor: '#0a1a2b',
+                border: 'none',
+              }
+            }
+          >
+            Log out
+            
+          </button>
         </nav>
       {/* <div className="notify-wrapper">
 
       </div> */}
-      
+
       </div>
       
     </IconContext.Provider>

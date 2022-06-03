@@ -5,7 +5,7 @@ import SideNavBar from "../../components/SideNavBar/";
 import Home from "../../components/Home/";
 import Statistic from "../../components/Statistic";
 import ControlPanel from "../../components/control-panel";
-
+import Schedule from "../../components/Schedule/index";
 import Forecasting from "../../components/Forecasting"
 
 import "./style.css";
@@ -18,6 +18,8 @@ import { AiOutlineConsoleSql } from "react-icons/ai";
 import AuthService from '../../services/AuthService';
 // import JWTStorage from '../../services/JWTStorage';
 import { loadToken } from '../../services/JWTStorage'
+
+import { useNavigate } from "react-router-dom";
 
 
 const API_URL = "http://localhost:3001/api/user/";
@@ -40,7 +42,7 @@ export default class Dashboard extends React.Component {
       humiAir: "0",
       light: "0",
 
-      user: AuthService.getUser(),
+      user: JSON.parse(AuthService.getUser()),
 
       notificationData:  [
           // {
@@ -271,6 +273,12 @@ export default class Dashboard extends React.Component {
     });
   };
 
+  // logout = () => {
+  //   const navigate = useNavigate();
+  //   localStorage.removeItem('user');
+  //   navigate('/login');
+  // }
+
 
   // checkJwt = async() => {
   //   loadToken().then(value => {
@@ -402,6 +410,7 @@ export default class Dashboard extends React.Component {
   // <Navigate replace to="/login" />
   // !this.state.username ? <Navigate to="/login" replace /> :
   // console.log(AuthService.getUser())
+  // console.log(this.state.user.username)
   return (
     <div className="d-flex">
       {/* <Navigate replace to="/login" /> */}
@@ -411,6 +420,20 @@ export default class Dashboard extends React.Component {
       <div className="col">
         <div className="top-nav-wrap">
           <div className="top-nav" style={{height: 60}}>
+          <p
+            style={
+              {
+                color: 'white',
+                lineHeight: '60px',
+                height: '60px',
+                marginLeft: '10px',
+                fontSize: 20
+              }
+            }
+          >
+            Welcome, {this.state.user.username}
+            
+          </p>
           <NotifyMe
             data={this.state.notificationData}
             storageKey='notific_key'
@@ -477,6 +500,17 @@ export default class Dashboard extends React.Component {
             } 
             
           />
+
+          <Route 
+            path="/schedule" 
+            element={
+              <Schedule 
+                ledStatus={this.state.ledStatus}
+                pumpStatus={this.state.pumpStatus}
+              />
+            } 
+          />
+
         </Routes>
       </div>
     </div>

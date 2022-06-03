@@ -101,7 +101,14 @@ class ControlPanel extends Component {
   render = () => {
     return (
       <div className="container-fluid d-flex flex-wrap background justify-content-center p-4">
-        <h1 className="text-center w-100">Control panel</h1>
+        <h1 className="text-center w-100"
+          style={{
+            color: 'white'
+          }}
+        >
+          
+          Control panel
+        </h1>
         <div className="w-100 justify-content-center d-flex control-box">
           <div className="form-group d-flex align-items-center w-50 justify-content-center">
             <label style={{ fontSize: 30, paddingRight: 30 }}>LED</label>

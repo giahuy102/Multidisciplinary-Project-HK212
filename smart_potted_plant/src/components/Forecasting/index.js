@@ -163,7 +163,13 @@ export default function Forecasting(props) {
             </div>
             <div className='d-flex justify-content-center'>
                 <div className='recommend d-flex flex-column align-items-center justify-content-center'>
-                    <h2>System's suggestion</h2>
+                    <h2
+                        style={
+                            {
+                                color: 'white'
+                            }
+                        }
+                    >System's suggestion</h2>
                     {
                         canDisplay && 
                         (

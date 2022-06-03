@@ -7,9 +7,19 @@ const bodyParser = require("body-parser");
 dotenv.config(); //load config from .env to process.env
 const cors = require('cors') //cross origin
 
+require('./services/schedule/schedule');
+
+// app.use(
+//     cors({
+//         origin: "*", // <-- location of the react app were connecting to,
+
+//     })
+// );
+
 app.use(
     cors({
-        origin: "*", // <-- location of the react app were connecting to
+        origin: process.env.CLIENT_ADDRESS, // <-- location of the react app were connecting to
+        credentials: true,
     })
 );
 
