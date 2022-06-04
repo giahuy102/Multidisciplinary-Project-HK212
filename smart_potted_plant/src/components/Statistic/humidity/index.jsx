@@ -4,7 +4,7 @@ import { useState } from "react";
 
 export default function Humidity(props) {
     useEffect(() => {
-        // console.log("props: ", props.humidity)
+        console.log("Con cu: ", props.humidity)
         
         var reversedData = props.humidity.map(ele => ele).reverse();
         var value_list=[], time_list=[];

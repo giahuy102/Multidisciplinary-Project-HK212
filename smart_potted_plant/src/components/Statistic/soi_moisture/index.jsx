@@ -4,8 +4,6 @@ import { useState } from "react";
 
 export default function SoilMoisture(props) {
     useEffect(() => {
-        // console.log("props: ", props.soilMoisture)
-
         var reversedData = props.soilMoisture.map(ele => ele).reverse();
         var value_list=[], time_list=[];
         reversedData = reversedData.filter( (ele) => {
@@ -19,7 +17,6 @@ export default function SoilMoisture(props) {
 
         // console.log("value list soil moisture: ", value_list)
         // console.log("time list child soil moisture: ", time_list)
-
         set_series_soil_moisture(prev => ([{...prev, data: value_list}]))
         set_soil_moisture(prev => ({...prev, xaxis: {categories: time_list}}));
     }, [props])

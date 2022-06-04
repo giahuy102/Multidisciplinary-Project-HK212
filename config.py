@@ -3,7 +3,7 @@ import sys
 from Adafruit_IO import MQTTClient
 
 ADAFRUIT_IO_USERNAME = "dat_huynh"
-ADAFRUIT_IO_KEY = "aio_nmMP12cvDwjXGwRSJ8uXY1HPT5DQ"
+ADAFRUIT_IO_KEY = "aio_OXtD13SoCstFQ0BWCSM17wriOj8J"
 FEED_IDS = ["bbc-led", "bbc-temp", "bbc-pump", "bbc-humi-air", "bbc-humi-soil"]
 PORT = "COM3"
 def get_serial_port():
@@ -16,7 +16,7 @@ def get_serial_port():
     return None
 input_port = get_serial_port()
 if input_port: PORT = input_port
-print("Serial port:", get_serial_port())
+print("Get default port: ", PORT)
 client = MQTTClient(ADAFRUIT_IO_USERNAME, ADAFRUIT_IO_KEY)
 serial_port = serial.Serial(port=PORT, baudrate=115200)
 

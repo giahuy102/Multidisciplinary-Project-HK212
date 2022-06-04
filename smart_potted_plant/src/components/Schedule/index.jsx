@@ -80,7 +80,7 @@ class Schedule extends Component {
     let HH = d.getHours() >= 10 ? String(d.getHours()) : "0" + String(d.getHours()),
       MM = d.getMinutes() >= 10 ? String(d.getMinutes()) : "0" + String(d.getMinutes()),
       dd = d.getDate() >= 10 ? String(d.getDate()) : "0" + String(d.getDate()),
-      mm = d.getMonth() >= 10 ? String(d.getMonth()) : "0" + String(d.getMonth()),
+      mm = d.getMonth() >= 10 ? String(d.getMonth() + 1) : "0" + String(d.getMonth() + 1),
       yyyy = String(d.getFullYear());
     let _time = HH + ":" + MM,
       _day = yyyy + "-" + mm + "-" + dd;

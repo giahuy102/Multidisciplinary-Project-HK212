@@ -11,14 +11,14 @@ let clientTopics = {
 
 let settings = {
     username: "dat_huynh",
-    key: "aio_nmMP12cvDwjXGwRSJ8uXY1HPT5DQ",
+    key: "aio_OXtD13SoCstFQ0BWCSM17wriOj8J",
     clientTopics: [
         clientTopics.temperature,
         clientTopics.led,
         clientTopics.pump,
         clientTopics.humiAir,
         clientTopics.humiSoil,
-        clientTopics.light
+        clientTopics.light,
     ],
     feedKey: {
         temperature: "bbc-temp",
@@ -27,7 +27,7 @@ let settings = {
         humiAir: "bbc-humi-air",
         humiSoil: "bbc-humi-soild",
     },
-    feedKeyDetail: clientTopics
+    feedKeyDetail: clientTopics,
 };
 
 module.exports = settings

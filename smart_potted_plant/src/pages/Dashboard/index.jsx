@@ -321,7 +321,10 @@ export default class Dashboard extends React.Component {
       let data = message.data;
       console.log(data)
       if (feedID == this.feedKey.led) {
-        let newLedStatusData = [data].concat(
+        let newLedStatusData;
+        if (this.state.ledStatusData.length < 10)
+          newLedStatusData = [data].concat(this.state.ledStatusData);
+        else newLedStatusData = [data].concat(
           this.state.ledStatusData.slice(0, -1)
         );
         return this.setState({
@@ -330,7 +333,10 @@ export default class Dashboard extends React.Component {
         });
       }
       if (feedID == this.feedKey.pump) {
-        let newPumpStatusData = [data].concat(
+        let newPumpStatusData;
+        if (this.state.pumpStatusData.length < 10)
+          newPumpStatusData = [data].concat(this.state.pumpStatusData);
+        else newPumpStatusData = [data].concat(
           this.state.pumpStatusData.slice(0, -1)
         );
         return this.setState({
@@ -339,7 +345,10 @@ export default class Dashboard extends React.Component {
         });
       }
       if (feedID == this.feedKey.temperature) {
-        let newTemperatureData = [data].concat(
+        let newTemperatureData;
+        if (this.state.temperatureData.length < 10)
+          newTemperatureData = [data].concat(this.state.temperatureData);
+        else newTemperatureData = [data].concat(
           this.state.temperatureData.slice(0, -1)
         );
               console.log(this.state.temperatureData);
@@ -352,8 +361,10 @@ export default class Dashboard extends React.Component {
         });
       }
       if (feedID == this.feedKey.humiAir) {
-        let newHumiAirData = [data].concat(this.state.humiAir.slice(0, -1));
-
+        let newHumiAirData;;
+        if (this.state.humiAirData.length < 10)
+          newHumiAirData = [data].concat(this.state.humiAirData);
+        else newHumiAirData = [data].concat(this.state.humiAirData.slice(0, -1));
         // console.log(newHumiAirData);
         this.checkAndPushMessage("Air humidity", data.value, this.threshold.humiAir);
         return this.setState({
@@ -362,8 +373,10 @@ export default class Dashboard extends React.Component {
         });
       }
       if (feedID == this.feedKey.humiSoil) {
-        let newHumiSoilData = [data].concat(this.state.humiSoil.slice(0, -1));
-
+        let newHumiSoilData;
+        if (this.state.humiSoilData.length < 10)
+          newHumiSoilData = [data].concat(this.state.humiSoilData);
+        else newHumiSoilData = [data].concat(this.state.humiSoilData.slice(0, -1));
         this.checkAndPushMessage("Soid humidity", data.value, this.threshold.humiSoil);
 
         return this.setState({
@@ -372,7 +385,10 @@ export default class Dashboard extends React.Component {
         });
       }
       if (feedID == this.feedKey.light) {
-        let newLightData = [data].concat(this.state.lightData.slice(0, -1));
+        let newLightData;
+        if (this.state.lightData.length < 10)
+          newLightData = [data].concat(this.state.lightData);
+        else newLightData = [data].concat(this.state.lightData.slice(0, -1));
 
         this.checkAndPushMessage("Light", data.value, this.threshold.light);
 
