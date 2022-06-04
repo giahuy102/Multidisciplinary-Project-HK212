@@ -130,113 +130,113 @@ export default class Dashboard extends React.Component {
 
 
 
-    response.data.humiAir = [
-      {
-        feed_key: 'bbc-led',
-        value: 400
-      },
-      {
-        feed_key: 'bbc-led',
-        value: 200
-      },
-      {
-        feed_key: 'bbc-led',
-        value: 200
-      },
-      {
-        feed_key: 'bbc-led',
-        value: 200
-      },
-      {
-        feed_key: 'bbc-led',
-        value: 200
-      },
-      {
-        feed_key: 'bbc-led',
-        value: 200
-      }
-    ]
+    // response.data.humiAir = [
+    //   {
+    //     feed_key: 'bbc-led',
+    //     value: 400
+    //   },
+    //   {
+    //     feed_key: 'bbc-led',
+    //     value: 200
+    //   },
+    //   {
+    //     feed_key: 'bbc-led',
+    //     value: 200
+    //   },
+    //   {
+    //     feed_key: 'bbc-led',
+    //     value: 200
+    //   },
+    //   {
+    //     feed_key: 'bbc-led',
+    //     value: 200
+    //   },
+    //   {
+    //     feed_key: 'bbc-led',
+    //     value: 200
+    //   }
+    // ]
 
-    response.data.temperature = [
-      {
-        feed_key: 'bbc-led',
-        value: 400
-      },
-      {
-        feed_key: 'bbc-led',
-        value: 200
-      },
-      {
-        feed_key: 'bbc-led',
-        value: 200
-      },
-      {
-        feed_key: 'bbc-led',
-        value: 200
-      },
-      {
-        feed_key: 'bbc-led',
-        value: 200
-      },
-      {
-        feed_key: 'bbc-led',
-        value: 200
-      }
-    ]
+    // response.data.temperature = [
+    //   {
+    //     feed_key: 'bbc-led',
+    //     value: 400
+    //   },
+    //   {
+    //     feed_key: 'bbc-led',
+    //     value: 200
+    //   },
+    //   {
+    //     feed_key: 'bbc-led',
+    //     value: 200
+    //   },
+    //   {
+    //     feed_key: 'bbc-led',
+    //     value: 200
+    //   },
+    //   {
+    //     feed_key: 'bbc-led',
+    //     value: 200
+    //   },
+    //   {
+    //     feed_key: 'bbc-led',
+    //     value: 200
+    //   }
+    // ]
 
-    response.data.humiSoil = [
-      {
-        feed_key: 'bbc-led',
-        value: 400
-      },
-      {
-        feed_key: 'bbc-led',
-        value: 200
-      },
-      {
-        feed_key: 'bbc-led',
-        value: 200
-      },
-      {
-        feed_key: 'bbc-led',
-        value: 200
-      },
-      {
-        feed_key: 'bbc-led',
-        value: 200
-      },
-      {
-        feed_key: 'bbc-led',
-        value: 200
-      }
-    ]
+    // response.data.humiSoil = [
+    //   {
+    //     feed_key: 'bbc-led',
+    //     value: 400
+    //   },
+    //   {
+    //     feed_key: 'bbc-led',
+    //     value: 200
+    //   },
+    //   {
+    //     feed_key: 'bbc-led',
+    //     value: 200
+    //   },
+    //   {
+    //     feed_key: 'bbc-led',
+    //     value: 200
+    //   },
+    //   {
+    //     feed_key: 'bbc-led',
+    //     value: 200
+    //   },
+    //   {
+    //     feed_key: 'bbc-led',
+    //     value: 200
+    //   }
+    // ]
 
-    response.data.light = [
-      {
-        feed_key: 'bbc-led',
-        value: 400
-      },
-      {
-        feed_key: 'bbc-led',
-        value: 200
-      },
-      {
-        feed_key: 'bbc-led',
-        value: 200
-      },
-      {
-        feed_key: 'bbc-led',
-        value: 200
-      },
-      {
-        feed_key: 'bbc-led',
-        value: 200
-      },
-      {
-        feed_key: 'bbc-led',
-        value: 200
-      }
-    ]
+    // response.data.light = [
+    //   {
+    //     feed_key: 'bbc-led',
+    //     value: 400
+    //   },
+    //   {
+    //     feed_key: 'bbc-led',
+    //     value: 200
+    //   },
+    //   {
+    //     feed_key: 'bbc-led',
+    //     value: 200
+    //   },
+    //   {
+    //     feed_key: 'bbc-led',
+    //     value: 200
+    //   },
+    //   {
+    //     feed_key: 'bbc-led',
+    //     value: 200
+    //   },
+    //   {
+    //     feed_key: 'bbc-led',
+    //     value: 200
+    //   }
+    // ]
 
     console.log(response.data)
 
