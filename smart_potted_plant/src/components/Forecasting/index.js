@@ -56,10 +56,10 @@ export default function Forecasting(props) {
                 const X = new Matrix(x);
                 const YLed = Matrix.columnVector(yLed);
                 const YPump = Matrix.columnVector(yPump);
-                const logreg = new LogisticRegression({ numSteps: 40, learningRate: 5e-3 });
+                const logreg = new LogisticRegression({ numSteps: 200, learningRate: 5e-3 });
                 logreg.train(X, YLed);
                 const resLed = logreg.predict(input);
-                logreg.train(X, YLed);
+                logreg.train(X, YPump);
                 const resPump = logreg.predict(input);
                 // const finalResults = logreg.predict(Xtest);
                 // console.log(finalResults)
@@ -68,8 +68,8 @@ export default function Forecasting(props) {
 
                 if (resLed[0] == 0) setLedMessage('You should turn off the LED');
                 else setLedMessage('You should turn on the LED');
-                if (resPump[0] == 0) setPumpMessage('You should turn on the PUMP');
-                else setPumpMessage('You should turn off the PUMP');
+                if (resPump[0] == 0) setPumpMessage('You should turn off the PUMP');
+                else setPumpMessage('You should turn on the PUMP');
             }
         }
         else {
@@ -174,11 +174,11 @@ export default function Forecasting(props) {
                         canDisplay && 
                         (
                             <div className='custom'>
-                                <div class="alert alert-info d-flex justify-content-center custom-child" role="alert">
+                                <div className="alert alert-info d-flex justify-content-center custom-child" role="alert">
                                     {ledMessage}
                                 </div>
 
-                                <div class="alert alert-info d-flex justify-content-center custom-child" role="alert">
+                                <div className="alert alert-info d-flex justify-content-center custom-child" role="alert">
                                     {pumpMessage}
                                 </div>
                             </div>

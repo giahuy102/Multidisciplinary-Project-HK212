@@ -114,7 +114,7 @@ class ControlPanel extends Component {
             <label style={{ fontSize: 30, paddingRight: 30 }}>LED</label>
             <Switch
               value={parseInt(this.props.ledStatus)}
-              onClick={() => this.props.changeDeviceStatus("led")}
+              onClick={() => {this.props.changeDeviceStatus("led"); }}
               onColor="#EF476F"
               id={"switch-led"}
             />

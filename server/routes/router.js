@@ -147,6 +147,7 @@ router.post("/change-device-status", async(req, res) => {
         if (err) return res.status(201).send(err.toString());
         return res.status(200).send();
     });
+
 });
 
 

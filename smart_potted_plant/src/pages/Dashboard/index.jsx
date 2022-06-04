@@ -385,9 +385,6 @@ export default class Dashboard extends React.Component {
   };
   changeDeviceStatus = async (device) => {
     let deviceStatus = undefined;
-
-    console.log(device)
-
     if (device == "led") {
       deviceStatus = this.state.ledStatus == "0" ? "1" : "0";
       this.setState({ ledStatus: deviceStatus });
@@ -480,7 +477,7 @@ export default class Dashboard extends React.Component {
                 humiAir={this.state.humiAir}
                 humiSoil={this.state.humiSoil}
                 light={this.state.light}
-                changeDeviceStatus={() => this.changeDeviceStatus}
+                changeDeviceStatus={this.changeDeviceStatus}
               />
             }
           />

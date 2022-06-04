@@ -9,19 +9,19 @@ const cors = require('cors') //cross origin
 
 require('./services/schedule/schedule');
 
-// app.use(
-//     cors({
-//         origin: "*", // <-- location of the react app were connecting to,
-
-//     })
-// );
-
 app.use(
     cors({
-        origin: process.env.CLIENT_ADDRESS, // <-- location of the react app were connecting to
-        credentials: true,
+        origin: "*", // <-- location of the react app were connecting to,
+
     })
 );
+
+// app.use(
+//     cors({
+//         origin: process.env.CLIENT_ADDRESS, // <-- location of the react app were connecting to
+//         credentials: true,
+//     })
+// );
 
 // mongoose.connect(process.env.DB_CONNECT, { useNewUrlParser: true }, () => 
 //     console.log("Connect DB successfully")
