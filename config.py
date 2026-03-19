@@ -1,9 +1,19 @@
+import os
 import serial.tools.list_ports
 import sys
 from Adafruit_IO import MQTTClient
+from dotenv import load_dotenv
 
-ADAFRUIT_IO_USERNAME = "dat_huynh"
-ADAFRUIT_IO_KEY = "aio_OXtD13SoCstFQ0BWCSM17wriOj8J"
+load_dotenv()
+
+ADAFRUIT_IO_USERNAME = os.environ.get("ADAFRUIT_IO_USERNAME")
+ADAFRUIT_IO_KEY = os.environ.get("ADAFRUIT_IO_KEY")
+
+if not ADAFRUIT_IO_USERNAME or not ADAFRUIT_IO_KEY:
+    raise EnvironmentError(
+        "Missing required environment variables: ADAFRUIT_IO_USERNAME and ADAFRUIT_IO_KEY. "
+        "Copy .env.example to .env and fill in your Adafruit IO credentials."
+    )
 FEED_IDS = ["bbc-led", "bbc-temp", "bbc-pump", "bbc-humi-air", "bbc-humi-soil"]
 PORT = "COM3"
 def get_serial_port():

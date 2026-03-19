@@ -1,17 +1,28 @@
-//Use your own Adafruit server account to dev
+const dotenv = require('dotenv');
+dotenv.config();
+
+const username = process.env.ADAFRUIT_IO_USERNAME;
+const key = process.env.ADAFRUIT_IO_KEY;
+
+if (!username || !key) {
+    throw new Error(
+        'Missing required environment variables: ADAFRUIT_IO_USERNAME and ADAFRUIT_IO_KEY. ' +
+        'Copy server/.env.example to server/.env and fill in your Adafruit IO credentials.'
+    );
+}
 
 let clientTopics = {
-    temperature: "dat_huynh/feeds/bbc-temp",
-    led: "dat_huynh/feeds/bbc-led",
-    pump: "dat_huynh/feeds/bbc-pump",
-    humiAir: "dat_huynh/feeds/bbc-humi-air",
-    humiSoil: "dat_huynh/feeds/bbc-humi-soil",
-    light: "dat_huynh/feeds/bbc-light",
+    temperature: `${username}/feeds/bbc-temp`,
+    led: `${username}/feeds/bbc-led`,
+    pump: `${username}/feeds/bbc-pump`,
+    humiAir: `${username}/feeds/bbc-humi-air`,
+    humiSoil: `${username}/feeds/bbc-humi-soil`,
+    light: `${username}/feeds/bbc-light`,
 };
 
 let settings = {
-    username: "dat_huynh",
-    key: "aio_OXtD13SoCstFQ0BWCSM17wriOj8J",
+    username: username,
+    key: key,
     clientTopics: [
         clientTopics.temperature,
         clientTopics.led,
